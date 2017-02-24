@@ -1,0 +1,15 @@
+PODS:
+  - LUExpandableTableView (1.0.1)
+  - SideMenuController (0.2.1)
+
+DEPENDENCIES:
+  - LUExpandableTableView
+  - SideMenuController
+
+SPEC CHECKSUMS:
+  LUExpandableTableView: 9eeac602db932ed1bc38788126cce9a3f3896738
+  SideMenuController: 4c543122289d74e1db9d1e24fd3264581fd6ac4e
+
+PODFILE CHECKSUM: 37c0d85e040fc3df87a92b9a47313cb7ce974879
+
+COCOAPODS: 1.1.1

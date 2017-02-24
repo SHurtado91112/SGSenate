@@ -1,0 +1,6 @@
+framework module Pods_SGSenate {
+  umbrella header "Pods-SGSenate-umbrella.h"
+
+  export *
+  module * { export * }
+}
