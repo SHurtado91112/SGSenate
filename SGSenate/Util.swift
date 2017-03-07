@@ -9,6 +9,20 @@
 import Foundation
 import UIKit
 
+class Util: NSObject
+{
+    class func invokeAlertMethod(_ strTitle: NSString, strBody: NSString, delegate: AnyObject?)
+    {
+        let alert = UIAlertController(title: strTitle as String, message: strBody as String, preferredStyle: .alert)
+        let action1 = UIAlertAction(title: "Okay", style: .default){ _ in}
+        
+        alert.addAction(action1)
+        
+        let rootVC = UIApplication.shared.keyWindow?.rootViewController
+        rootVC?.present(alert, animated: true){}
+    }
+}
+
 extension UIColor
 {
     //sg colors

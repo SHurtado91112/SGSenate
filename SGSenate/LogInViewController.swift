@@ -8,16 +8,31 @@
 
 import UIKit
 import SideMenuController
+import Firebase
+import FirebaseAuthUI
 
 class LogInViewController: UIViewController, SideMenuControllerDelegate
 {
+    
+    @IBOutlet weak var usernameTextField: UITextField!
+    
+    @IBOutlet weak var signInBtn: UIButton!
+    
+    @IBOutlet weak var dontBtn: UIButton!
+    
+    @IBOutlet weak var passwordTextField: UITextField!
+    
+    var SignUp = false
+    
+    var ref : FIRDatabaseReference!
     
     override func viewDidLoad()
     {
         super.viewDidLoad()
         sideMenuController?.delegate = self
         
-        // Do any additional setup after loading the view.
+        self.signInBtn.layer.cornerRadius = 4
+        self.dontBtn.layer.cornerRadius = 4
     }
     
     func sideMenuControllerDidHide(_ sideMenuController: SideMenuController) {
@@ -26,6 +41,124 @@ class LogInViewController: UIViewController, SideMenuControllerDelegate
     
     func sideMenuControllerDidReveal(_ sideMenuController: SideMenuController) {
         print(#function)
+    }
+    
+    @IBAction func signInPressed(_ sender: Any)
+    {
+        if(self.usernameTextField.text == "" || self.usernameTextField.text == "")
+        {
+            let message = "Please, no blanks for email or password."
+            Util.invokeAlertMethod("Error", strBody: message as NSString, delegate: nil)
+            return
+        }
+        
+        if(SignUp)
+        {
+            registerConfig()
+        }
+        else
+        {
+            loginConfig()
+        }
+    }
+    
+    func registerConfig()
+    {
+        
+        guard let email = self.usernameTextField.text, let password = self.passwordTextField.text
+        else
+        {
+            let message = "Invalid email/password."
+            Util.invokeAlertMethod("Error", strBody: message as NSString, delegate: nil)
+            return
+        }
+        
+        FIRAuth.auth()?.createUser(withEmail: email, password: password, completion: { (user: FIRUser?, error: Error?) in
+            
+            if(error != nil)
+            {
+                print("Error: \(error?.localizedDescription)")
+                
+                let message = error?.localizedDescription
+                
+                Util.invokeAlertMethod("Error", strBody: message! as NSString, delegate: nil)
+                
+                return
+            }
+            
+            guard let uid = user?.uid
+            else
+            {
+                return
+            }
+            
+            //else
+            self.ref = FIRDatabase.database().reference()
+            
+            let userRef = self.ref.child("users").child(uid)
+            
+            let values = ["email" : email]
+            
+            userRef.updateChildValues(values, withCompletionBlock: { (error: Error?, tempRef: FIRDatabaseReference) in
+                
+                if(error != nil)
+                {
+                    print("Error: \(error?.localizedDescription)")
+                    return
+                }
+
+                print("Saved User")
+                self.usernameTextField.text = ""
+                self.passwordTextField.text = ""
+                
+                self.performSegue(withIdentifier: "validVoterSegue", sender: self)
+            })
+            
+        })
+    }
+    
+    func loginConfig()
+    {
+        guard let email = self.usernameTextField.text, let password = self.passwordTextField.text
+            else
+        {
+            let message = "Invalid email/password."
+            Util.invokeAlertMethod("Error", strBody: message as NSString, delegate: nil)
+            return
+        }
+        
+        FIRAuth.auth()?.signIn(withEmail: email, password: password, completion: { (user: FIRUser?, error: Error?) in
+            
+            
+            if(error != nil)
+            {
+                print("Error: \(error?.localizedDescription)")
+                return
+            }
+
+            print("Logged In User")
+            
+            self.usernameTextField.text = ""
+            self.passwordTextField.text = ""
+            
+            self.performSegue(withIdentifier: "validVoterSegue", sender: self)
+        })
+    }
+    
+    @IBAction func dontPressed(_ sender: Any)
+    {
+        SignUp = !SignUp
+        
+        if(SignUp)
+        {
+            self.signInBtn.setTitle("Sign Up!",for: .normal)
+            self.dontBtn.setTitle("Already have an account?",for: .normal)
+        }
+        else
+        {
+            self.signInBtn.setTitle("Sign In!",for: .normal)
+            self.dontBtn.setTitle("Don't have an account?",for: .normal)
+        }
     }
     
     override func didReceiveMemoryWarning()

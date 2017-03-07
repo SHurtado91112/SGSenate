@@ -26,6 +26,11 @@
 		286D3DE11E4D1FF4007F9A1C /* DotsLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 286D3DE01E4D1FF4007F9A1C /* DotsLoader.swift */; };
 		286D3DE61E4D27D1007F9A1C /* BillCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 286D3DE51E4D27D1007F9A1C /* BillCell.swift */; };
 		286D3DE91E4D65E5007F9A1C /* MiscCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 286D3DE81E4D65E5007F9A1C /* MiscCell.swift */; };
+		28C81E2C1E6DC7DC008B487B /* AdminLogInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28C81E2B1E6DC7DC008B487B /* AdminLogInViewController.swift */; };
+		28C81E2E1E6DC7E5008B487B /* AdminSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28C81E2D1E6DC7E5008B487B /* AdminSettingsViewController.swift */; };
+		28C81E301E6DDAA2008B487B /* MiscLinkCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28C81E2F1E6DDAA2008B487B /* MiscLinkCell.swift */; };
+		28C81E321E6DDABE008B487B /* BillLinkCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28C81E311E6DDABE008B487B /* BillLinkCell.swift */; };
+		28C81E341E6DE15E008B487B /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 28C81E331E6DE15E008B487B /* GoogleService-Info.plist */; };
 		7DBF2D71809F0FD7AA049BF9 /* Pods_SGSenate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EF49B91AD749F461CC71E043 /* Pods_SGSenate.framework */; };
 /* End PBXBuildFile section */
 
@@ -51,6 +56,11 @@
 		286D3DE01E4D1FF4007F9A1C /* DotsLoader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DotsLoader.swift; sourceTree = "<group>"; };
 		286D3DE51E4D27D1007F9A1C /* BillCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BillCell.swift; sourceTree = "<group>"; };
 		286D3DE81E4D65E5007F9A1C /* MiscCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MiscCell.swift; sourceTree = "<group>"; };
+		28C81E2B1E6DC7DC008B487B /* AdminLogInViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AdminLogInViewController.swift; sourceTree = "<group>"; };
+		28C81E2D1E6DC7E5008B487B /* AdminSettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AdminSettingsViewController.swift; sourceTree = "<group>"; };
+		28C81E2F1E6DDAA2008B487B /* MiscLinkCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MiscLinkCell.swift; sourceTree = "<group>"; };
+		28C81E311E6DDABE008B487B /* BillLinkCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BillLinkCell.swift; sourceTree = "<group>"; };
+		28C81E331E6DE15E008B487B /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		47D4CCBCBF13E33080D289D3 /* Pods-SGSenate.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SGSenate.debug.xcconfig"; path = "Pods/Target Support Files/Pods-SGSenate/Pods-SGSenate.debug.xcconfig"; sourceTree = "<group>"; };
 		E0D8CA8C4D24DFF84943FD78 /* Pods-SGSenate.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SGSenate.release.xcconfig"; path = "Pods/Target Support Files/Pods-SGSenate/Pods-SGSenate.release.xcconfig"; sourceTree = "<group>"; };
 		EF49B91AD749F461CC71E043 /* Pods_SGSenate.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SGSenate.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -132,6 +142,7 @@
 				286D3DE21E4D2003007F9A1C /* Resource */,
 				286D3DB51E4ADDD7007F9A1C /* Assets.xcassets */,
 				286D3DB71E4ADDD7007F9A1C /* LaunchScreen.storyboard */,
+				28C81E331E6DE15E008B487B /* GoogleService-Info.plist */,
 				286D3DBA1E4ADDD7007F9A1C /* Info.plist */,
 			);
 			path = SGSenate;
@@ -156,6 +167,7 @@
 				286D3DD61E4BBE3A007F9A1C /* DebateViewController.swift */,
 				286D3DDA1E4BBEAA007F9A1C /* LogInViewController.swift */,
 				286D3DDC1E4BBEB5007F9A1C /* VoteViewController.swift */,
+				28C81E2A1E6DC7BE008B487B /* Admin */,
 			);
 			name = ViewControllers;
 			sourceTree = "<group>";
@@ -176,6 +188,17 @@
 				286D3DE81E4D65E5007F9A1C /* MiscCell.swift */,
 			);
 			name = Misc;
+			sourceTree = "<group>";
+		};
+		28C81E2A1E6DC7BE008B487B /* Admin */ = {
+			isa = PBXGroup;
+			children = (
+				28C81E2B1E6DC7DC008B487B /* AdminLogInViewController.swift */,
+				28C81E2D1E6DC7E5008B487B /* AdminSettingsViewController.swift */,
+				28C81E2F1E6DDAA2008B487B /* MiscLinkCell.swift */,
+				28C81E311E6DDABE008B487B /* BillLinkCell.swift */,
+			);
+			name = Admin;
 			sourceTree = "<group>";
 		};
 		C947AD49E276ABB7D9E641D7 /* Frameworks */ = {
@@ -250,6 +273,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				286D3DB91E4ADDD7007F9A1C /* LaunchScreen.storyboard in Resources */,
+				28C81E341E6DE15E008B487B /* GoogleService-Info.plist in Resources */,
 				286D3DB61E4ADDD7007F9A1C /* Assets.xcassets in Resources */,
 				286D3DB41E4ADDD7007F9A1C /* Main.storyboard in Resources */,
 			);
@@ -315,8 +339,12 @@
 				286D3DC91E4B74D3007F9A1C /* menuController.swift in Sources */,
 				286D3DE91E4D65E5007F9A1C /* MiscCell.swift in Sources */,
 				286D3DD31E4BBE1A007F9A1C /* AgendaViewController.swift in Sources */,
+				28C81E301E6DDAA2008B487B /* MiscLinkCell.swift in Sources */,
+				28C81E2E1E6DC7E5008B487B /* AdminSettingsViewController.swift in Sources */,
+				28C81E2C1E6DC7DC008B487B /* AdminLogInViewController.swift in Sources */,
 				28298A3B1E5DEC9B00B1AF01 /* ItemsViewController.swift in Sources */,
 				286D3DE11E4D1FF4007F9A1C /* DotsLoader.swift in Sources */,
+				28C81E321E6DDABE008B487B /* BillLinkCell.swift in Sources */,
 				286D3DE61E4D27D1007F9A1C /* BillCell.swift in Sources */,
 				28298A381E5DE97700B1AF01 /* Util.swift in Sources */,
 				286D3DCF1E4B8F9D007F9A1C /* menuViewCell.swift in Sources */,

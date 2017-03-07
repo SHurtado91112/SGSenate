@@ -11,7 +11,7 @@ import UIKit
 class MenuTableViewController: UITableViewController {
 
     
-    let segues = ["embedInitialCenterController", "billsCenter", "debateCenter", "miscCenter", "logCenter"]
+    let segues = ["embedInitialCenterController", "billsCenter", "debateCenter", "miscCenter", "logCenter", "adminCenter"]
     
     private var previousIndex: NSIndexPath?
     
@@ -108,6 +108,14 @@ class MenuTableViewController: UITableViewController {
                 cell.viewImg = (UIImage(named: "Login Rounded Right Filled-50")?.withRenderingMode(.alwaysTemplate))!
                 cell.cellImgView.image = cell.viewImg
                 break;
+            
+            case 5:
+                cell.viewText = "Admin Log In"
+                cell.viewName.text = cell.viewText
+                cell.viewImg = (UIImage(named: "Lock Filled-50")?.withRenderingMode(.alwaysTemplate))!
+                cell.cellImgView.image = cell.viewImg
+                break;
+            
             
             default:
                 break;
