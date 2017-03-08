@@ -11,7 +11,7 @@ import SideMenuController
 import Firebase
 import FirebaseAuthUI
 
-class LogInViewController: UIViewController, SideMenuControllerDelegate
+class LogInViewController: UIViewController, SideMenuControllerDelegate, UITextFieldDelegate
 {
     
     @IBOutlet weak var usernameTextField: UITextField!
@@ -22,6 +22,8 @@ class LogInViewController: UIViewController, SideMenuControllerDelegate
     
     @IBOutlet weak var passwordTextField: UITextField!
     
+    @IBOutlet weak var effectView: UIVisualEffectView!
+    
     var SignUp = false
     
     var ref : FIRDatabaseReference!
@@ -29,6 +31,9 @@ class LogInViewController: UIViewController, SideMenuControllerDelegate
     override func viewDidLoad()
     {
         super.viewDidLoad()
+        self.effectView.isHidden = false
+        self.effectView.alpha = 0
+        
         sideMenuController?.delegate = self
         
         self.signInBtn.layer.cornerRadius = 4
@@ -149,7 +154,7 @@ class LogInViewController: UIViewController, SideMenuControllerDelegate
     {
         SignUp = !SignUp
         
-        if(SignUp)
+        if(self.SignUp)
         {
             self.signInBtn.setTitle("Sign Up!",for: .normal)
             self.dontBtn.setTitle("Already have an account?",for: .normal)
@@ -159,7 +164,23 @@ class LogInViewController: UIViewController, SideMenuControllerDelegate
             self.signInBtn.setTitle("Sign In!",for: .normal)
             self.dontBtn.setTitle("Don't have an account?",for: .normal)
         }
+        
+        UIView.animate(withDuration: 0.3, animations: {
+            self.effectView.alpha = 1
+        }) { (Bool) in
+            UIView.animate(withDuration: 0.3, animations: {
+                self.effectView.alpha = 0
+            })
+        }
     }
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool
+    {
+        self.view.endEditing(true)
+        resignFirstResponder()
+        return true
+    }
+
     
     override func didReceiveMemoryWarning()
     {

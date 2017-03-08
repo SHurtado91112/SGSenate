@@ -10,7 +10,7 @@ import UIKit
 import Firebase
 import FirebaseAuthUI
 
-class AdminLogInViewController: UIViewController
+class AdminLogInViewController: UIViewController, UITextFieldDelegate
 {
 
     @IBOutlet weak var adminUserTextField: UITextField!
@@ -82,6 +82,14 @@ class AdminLogInViewController: UIViewController
 
         }
     }
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool
+    {
+        self.view.endEditing(true)
+        resignFirstResponder()
+        return true
+    }
+
     
 
     override func didReceiveMemoryWarning()
