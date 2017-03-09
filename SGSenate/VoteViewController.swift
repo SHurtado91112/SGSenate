@@ -20,6 +20,11 @@ class VoteViewController: UIViewController, SideMenuControllerDelegate
         // Do any additional setup after loading the view.
     }
     
+    @IBAction func signOut(_ sender: Any)
+    {
+        self.dismiss(animated: true, completion: nil)
+    }
+    
     func sideMenuControllerDidHide(_ sideMenuController: SideMenuController) {
         print(#function)
     }

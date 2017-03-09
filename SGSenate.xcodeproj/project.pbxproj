@@ -26,6 +26,9 @@
 		286D3DE11E4D1FF4007F9A1C /* DotsLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 286D3DE01E4D1FF4007F9A1C /* DotsLoader.swift */; };
 		286D3DE61E4D27D1007F9A1C /* BillCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 286D3DE51E4D27D1007F9A1C /* BillCell.swift */; };
 		286D3DE91E4D65E5007F9A1C /* MiscCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 286D3DE81E4D65E5007F9A1C /* MiscCell.swift */; };
+		28C733B71E7198770046F9D7 /* FloorCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28C733B61E7198770046F9D7 /* FloorCell.swift */; };
+		28C733B91E7198880046F9D7 /* QueueCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28C733B81E7198880046F9D7 /* QueueCell.swift */; };
+		28C733BB1E71AAF00046F9D7 /* AdminDebateTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28C733BA1E71AAF00046F9D7 /* AdminDebateTableViewController.swift */; };
 		28C81E2C1E6DC7DC008B487B /* AdminLogInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28C81E2B1E6DC7DC008B487B /* AdminLogInViewController.swift */; };
 		28C81E2E1E6DC7E5008B487B /* AdminSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28C81E2D1E6DC7E5008B487B /* AdminSettingsViewController.swift */; };
 		28C81E301E6DDAA2008B487B /* MiscLinkCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28C81E2F1E6DDAA2008B487B /* MiscLinkCell.swift */; };
@@ -56,6 +59,9 @@
 		286D3DE01E4D1FF4007F9A1C /* DotsLoader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DotsLoader.swift; sourceTree = "<group>"; };
 		286D3DE51E4D27D1007F9A1C /* BillCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BillCell.swift; sourceTree = "<group>"; };
 		286D3DE81E4D65E5007F9A1C /* MiscCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MiscCell.swift; sourceTree = "<group>"; };
+		28C733B61E7198770046F9D7 /* FloorCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FloorCell.swift; sourceTree = "<group>"; };
+		28C733B81E7198880046F9D7 /* QueueCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QueueCell.swift; sourceTree = "<group>"; };
+		28C733BA1E71AAF00046F9D7 /* AdminDebateTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AdminDebateTableViewController.swift; sourceTree = "<group>"; };
 		28C81E2B1E6DC7DC008B487B /* AdminLogInViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AdminLogInViewController.swift; sourceTree = "<group>"; };
 		28C81E2D1E6DC7E5008B487B /* AdminSettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AdminSettingsViewController.swift; sourceTree = "<group>"; };
 		28C81E2F1E6DDAA2008B487B /* MiscLinkCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MiscLinkCell.swift; sourceTree = "<group>"; };
@@ -164,7 +170,7 @@
 				28298A391E5DEC8500B1AF01 /* Items */,
 				286D3DE71E4D65D1007F9A1C /* Misc */,
 				286D3DE41E4D27BA007F9A1C /* Bills */,
-				286D3DD61E4BBE3A007F9A1C /* DebateViewController.swift */,
+				28C733B51E7198600046F9D7 /* Debate */,
 				286D3DDA1E4BBEAA007F9A1C /* LogInViewController.swift */,
 				286D3DDC1E4BBEB5007F9A1C /* VoteViewController.swift */,
 				28C81E2A1E6DC7BE008B487B /* Admin */,
@@ -190,10 +196,21 @@
 			name = Misc;
 			sourceTree = "<group>";
 		};
+		28C733B51E7198600046F9D7 /* Debate */ = {
+			isa = PBXGroup;
+			children = (
+				286D3DD61E4BBE3A007F9A1C /* DebateViewController.swift */,
+				28C733B81E7198880046F9D7 /* QueueCell.swift */,
+				28C733B61E7198770046F9D7 /* FloorCell.swift */,
+			);
+			name = Debate;
+			sourceTree = "<group>";
+		};
 		28C81E2A1E6DC7BE008B487B /* Admin */ = {
 			isa = PBXGroup;
 			children = (
 				28C81E2B1E6DC7DC008B487B /* AdminLogInViewController.swift */,
+				28C733BA1E71AAF00046F9D7 /* AdminDebateTableViewController.swift */,
 				28C81E2D1E6DC7E5008B487B /* AdminSettingsViewController.swift */,
 				28C81E2F1E6DDAA2008B487B /* MiscLinkCell.swift */,
 				28C81E311E6DDABE008B487B /* BillLinkCell.swift */,
@@ -337,6 +354,7 @@
 				286D3DD11E4B9CEA007F9A1C /* ContentViewController.swift in Sources */,
 				286D3DD71E4BBE3A007F9A1C /* DebateViewController.swift in Sources */,
 				286D3DC91E4B74D3007F9A1C /* menuController.swift in Sources */,
+				28C733B71E7198770046F9D7 /* FloorCell.swift in Sources */,
 				286D3DE91E4D65E5007F9A1C /* MiscCell.swift in Sources */,
 				286D3DD31E4BBE1A007F9A1C /* AgendaViewController.swift in Sources */,
 				28C81E301E6DDAA2008B487B /* MiscLinkCell.swift in Sources */,
@@ -354,6 +372,8 @@
 				286D3DD51E4BBE2A007F9A1C /* BillsViewController.swift in Sources */,
 				286D3DDB1E4BBEAA007F9A1C /* LogInViewController.swift in Sources */,
 				286D3DD91E4BBE56007F9A1C /* MiscViewController.swift in Sources */,
+				28C733BB1E71AAF00046F9D7 /* AdminDebateTableViewController.swift in Sources */,
+				28C733B91E7198880046F9D7 /* QueueCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

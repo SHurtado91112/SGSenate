@@ -8,6 +8,8 @@
 
 import UIKit
 import SideMenuController
+import Firebase
+import FirebaseAuthUI
 
 class AgendaViewController: UIViewController, SideMenuControllerDelegate, UIWebViewDelegate
 {
@@ -16,6 +18,9 @@ class AgendaViewController: UIViewController, SideMenuControllerDelegate, UIWebV
     
     @IBOutlet weak var loader: DotsLoader!
     
+    var ref : FIRDatabaseReference!
+    var link = ""
+    
     override func viewDidLoad()
     {
         super.viewDidLoad()
@@ -23,12 +28,23 @@ class AgendaViewController: UIViewController, SideMenuControllerDelegate, UIWebV
         webView?.delegate = self
         webView.alpha = 0
         
-        let targetURL = NSURL(string: "https://www.sg.ufl.edu/Portals/0/Resources/Senate/Agendas/2017/02-14-17.pdf?ver=2017-02-13-114601-560")!
-        
-        let request = NSURLRequest(url: targetURL as URL)
-        webView.loadRequest(request as URLRequest)
+        self.initializeAgenda()
         
         // Do any additional setup after loading the view.
+    }
+    
+    func initializeAgenda()
+    {
+        self.ref = FIRDatabase.database().reference()
+        self.ref.child("agenda").observe(.value, with: { (snap: FIRDataSnapshot) in
+            let val = snap.value as! [String : String]
+            self.link = val["link"] ?? "[link]"
+            
+            let targetURL = NSURL(string: self.link)!
+            
+            let request = NSURLRequest(url: targetURL as URL)
+            self.webView.loadRequest(request as URLRequest)
+        })
     }
     
     func webViewDidFinishLoad(_ webView: UIWebView)
@@ -42,6 +58,29 @@ class AgendaViewController: UIViewController, SideMenuControllerDelegate, UIWebV
             self.webView.alpha = 1
         }, completion: { _ in
             self.loader.removeFromSuperview()
+        })
+    }
+    
+    func configureAuth()
+    {
+        FIRAuth.auth()?.addStateDidChangeListener { (auth: FIRAuth, user: FIRUser?) in
+            
+            self.configureDB()
+        }
+    }
+    
+    func configureDB()
+    {
+        //initialize master link text field
+        self.ref = FIRDatabase.database().reference()
+        self.ref.child("agenda").observe(.value, with: { (snap: FIRDataSnapshot) in
+            let val = snap.value as! [String : String]
+            self.link = val["link"] ?? "[link]"
+            
+            let targetURL = NSURL(string: self.link)!
+            
+            let request = NSURLRequest(url: targetURL as URL)
+            self.webView.loadRequest(request as URLRequest)
         })
     }
     

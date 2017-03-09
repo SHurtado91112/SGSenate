@@ -40,9 +40,9 @@ class AdminSettingsViewController: UIViewController, UITableViewDelegate, UITabl
     override func viewDidLoad()
     {
         super.viewDidLoad()
-        
+
         containerPos = containerView.frame.origin
-//        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: NSNotification.Name.UIKeyboardWillShow, object: nil)
+
         NotificationCenter.default.addObserver(self, selector: #selector(self.keyboardNotification(notification:)), name: NSNotification.Name.UIKeyboardWillChangeFrame, object: nil)
         
         self.billStepper.layer.cornerRadius = 5.16
@@ -60,10 +60,12 @@ class AdminSettingsViewController: UIViewController, UITableViewDelegate, UITabl
         self.billNumLabel.text = "\(Int(self.billStepper.value))"
         self.miscNumLabel.text = "\(Int(self.miscStepper.value))"
     }
-    
-    deinit {
+
+    deinit
+    {
         NotificationCenter.default.removeObserver(self)
     }
+    
     
     func configureAuth()
     {
@@ -89,14 +91,6 @@ class AdminSettingsViewController: UIViewController, UITableViewDelegate, UITabl
     func configureDB()
     {
         ref = FIRDatabase.database().reference()
-        
-//        ref.child("agenda").observe(.childChanged) { (snapshot: FIRDataSnapshot)in
-//            
-//            snapshot.value
-//            let val = snapshot.value as! [String : String]
-//            
-//            self.agendaLinkTextField.text = val["link"] ?? "[link]"
-//        }
         
         ref.child("bills").observe(.childAdded) { (snapshot: FIRDataSnapshot)in
             let key = snapshot.key
@@ -223,6 +217,12 @@ class AdminSettingsViewController: UIViewController, UITableViewDelegate, UITabl
         
         self.miscTableView.reloadData()
     }
+    
+    @IBAction func signOut(_ sender: Any)
+    {
+        self.dismiss(animated: true, completion: nil)
+    }
+    
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell
     {

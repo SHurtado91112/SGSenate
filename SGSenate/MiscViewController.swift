@@ -8,19 +8,71 @@
 
 import UIKit
 import SideMenuController
+import Firebase
+import FirebaseAuthUI
 
 class MiscViewController: UIViewController, SideMenuControllerDelegate, UITableViewDelegate, UITableViewDataSource
 {
     @IBOutlet weak var tableView: UITableView!
+    
+    var misc: [FIRDataSnapshot]! = []
+    var ref : FIRDatabaseReference!
     
     override func viewDidLoad()
     {
         super.viewDidLoad()
         sideMenuController?.delegate = self
         
+        self.configureAuth()
+        
         tableView?.delegate = self
         tableView.rowHeight = 80
     }
+    
+    func configureAuth()
+    {
+        FIRAuth.auth()?.addStateDidChangeListener { (auth: FIRAuth, user: FIRUser?) in
+            //initialize master link text field
+            self.ref = FIRDatabase.database().reference()
+            
+            // refresh table data
+            self.misc.removeAll(keepingCapacity: false)
+            self.tableView.reloadData()
+            
+            self.configureDB()
+        }
+    }
+    
+    func configureDB()
+    {
+        ref = FIRDatabase.database().reference()
+        
+        ref.child("misc").observe(.childAdded) { (snapshot: FIRDataSnapshot)in
+            self.misc.append(snapshot)
+            self.tableView.insertRows(at: [IndexPath(row: self.misc.count-1, section: 0)], with: .automatic)
+            
+        }
+        
+        ref.child("misc").observe(.childChanged) { (snapshot: FIRDataSnapshot) in
+            
+            for i in (0...(self.misc.count-1))
+            {
+                self.misc[i] = snapshot
+            }
+        }
+        
+        self.scrollToBottomMessage()
+    }
+
+    func scrollToBottomMessage()
+    {
+        if(self.misc.count) == 0 { return }
+        
+        let bottomMiscIndex = IndexPath(row: self.tableView.numberOfRows(inSection: 0) - 1, section: 0)
+        self.tableView.scrollToRow(at: bottomMiscIndex, at: .bottom, animated: true)
+        
+    }
+    
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell
     {
@@ -28,16 +80,23 @@ class MiscViewController: UIViewController, SideMenuControllerDelegate, UITableV
         
         cell.miscLabel.text = "Misc. Item \(indexPath.row + 1)"
         
+        let snap = self.misc[indexPath.row]
+        let val = snap.value as! [String: String]
+        
+        cell.link = val["miscLink"] ?? "[miscLink]"
+
         return cell
     }
     
-    func numberOfSections(in tableView: UITableView) -> Int
-    {
-        return 1
-    }
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int
     {
-        return 4
+        if(self.misc != nil)
+        {
+            print(self.misc.count)
+            return self.misc.count
+        }
+        
+        return 0
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath)
@@ -80,7 +139,9 @@ class MiscViewController: UIViewController, SideMenuControllerDelegate, UITableV
             
             let cell = tableView.cellForRow(at: sender as! IndexPath) as! MiscCell
             
-            vc.targetURLString = "https://pdfs.semanticscholar.org/9c1b/8896fb06aad9990959aca4cf3989e0d91d8b.pdf"
+            print(cell.link)
+            
+            vc.targetURLString = cell.link
         }
      }
     

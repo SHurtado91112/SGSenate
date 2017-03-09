@@ -23,6 +23,8 @@ class ItemsViewController: UIViewController, UIWebViewDelegate
         webView?.delegate = self
         webView.alpha = 0
         
+        print(targetURLString)
+        
         let targetURL = NSURL(string: targetURLString)!
         
         let request = NSURLRequest(url: targetURL as URL)

@@ -14,6 +14,8 @@ class MiscCell: UITableViewCell {
     
     @IBOutlet weak var miscLabel: UILabel!
     
+    var link = ""
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         
