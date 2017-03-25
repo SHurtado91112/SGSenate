@@ -19,6 +19,8 @@ class AgendaViewController: UIViewController, SideMenuControllerDelegate, UIWebV
     @IBOutlet weak var loader: DotsLoader!
     
     var ref : FIRDatabaseReference!
+    var _refHand : FIRDatabaseHandle!
+    var _authHand: FIRAuthStateDidChangeListenerHandle!
     var link = ""
     
     override func viewDidLoad()
@@ -28,30 +30,53 @@ class AgendaViewController: UIViewController, SideMenuControllerDelegate, UIWebV
         webView?.delegate = self
         webView.alpha = 0
         
-        self.initializeAgenda()
+        NotificationCenter.default.addObserver(forName: NSNotification.Name(rawValue: Util.onSignOutNotification), object: nil, queue: OperationQueue.main) { (Notification) in
+            
+            self.onSignOut()
+        }
         
+        
+        if(Reachability.isConnectedToNetwork() == true)
+        {
+            print("Internet connection OK")
+            self.initializeAgenda()
+        }
+        else
+        {
+            print("Internet connection FAILED")
+            Util.invokeAlertMethod("No Internet Connection", strBody: "Make sure your device is connected to the internet.", delegate: nil)
+        }
         // Do any additional setup after loading the view.
+    }
+    
+    func onSignOut()
+    {
+        FIRAuth.auth()?.removeStateDidChangeListener(_authHand)
+        self.ref.removeObserver(withHandle: self._refHand)
     }
     
     func initializeAgenda()
     {
         self.ref = FIRDatabase.database().reference()
-        self.ref.child("agenda").observe(.value, with: { (snap: FIRDataSnapshot) in
-            let val = snap.value as! [String : String]
-            self.link = val["link"] ?? "[link]"
-            
-            let targetURL = NSURL(string: self.link)!
-            
-            let request = NSURLRequest(url: targetURL as URL)
-            self.webView.loadRequest(request as URLRequest)
-        })
+        
+        self._authHand = FIRAuth.auth()?.addStateDidChangeListener { (auth: FIRAuth, user: FIRUser?) in
+        
+            self._refHand = self.ref.child("agenda").observe(.value, with: { (snap: FIRDataSnapshot) in
+                
+                let val = snap.value as! [String : String]
+                self.link = val["link"] ?? "[link]"
+                
+                let targetURL = URL(string: self.link)!
+                
+                let request = URLRequest(url: targetURL)
+                self.webView.loadRequest(request)
+            })
+        }
     }
     
     func webViewDidFinishLoad(_ webView: UIWebView)
     {
-        print("reached")
         loader.alpha = 1
-        
         
         UIView.animate(withDuration: 0.3, animations: {
             self.loader.alpha = 0

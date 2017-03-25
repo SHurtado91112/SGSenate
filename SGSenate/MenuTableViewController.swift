@@ -7,11 +7,13 @@
 //
 
 import UIKit
+import Firebase
+import FirebaseAuthUI
 
 class MenuTableViewController: UITableViewController {
 
     
-    let segues = ["embedInitialCenterController", "billsCenter", "debateCenter", "miscCenter", "logCenter", "adminCenter"]
+    let segues = ["embedInitialCenterController", "billsCenter", "debateCenter", "miscCenter", "voteCenter", "adminCenter"]
     
     private var previousIndex: NSIndexPath?
     
@@ -39,12 +41,30 @@ class MenuTableViewController: UITableViewController {
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        return segues.count
+        return segues.count + 1
     }
 
     override func tableView(_ tableView: UITableView,
                             didSelectRowAt indexPath: IndexPath)
     {
+        if(indexPath.row == 6)
+        {
+            print("Sign Out")
+            
+            NotificationCenter.default.post(name: NSNotification.Name(rawValue: Util.onSignOutNotification), object: nil)
+
+            
+            try! FIRAuth.auth()!.signOut()
+            
+            if let storyboard = self.storyboard
+            {
+                let vc = storyboard.instantiateInitialViewController()
+                self.present(vc!, animated: true, completion: nil)
+            }
+            
+            return
+        }
+        
         print("Yes : \(segues[indexPath.row])")
         
         let cell = tableView.cellForRow(at: indexPath)
@@ -103,9 +123,9 @@ class MenuTableViewController: UITableViewController {
                 cell.cellImgView.image = cell.viewImg
                 break;
             case 4:
-                cell.viewText = "Voting Log In"
+                cell.viewText = "Voting"
                 cell.viewName.text = cell.viewText
-                cell.viewImg = (UIImage(named: "Login Rounded Right Filled-50")?.withRenderingMode(.alwaysTemplate))!
+                cell.viewImg = (UIImage(named: "Elections Filled-50")?.withRenderingMode(.alwaysTemplate))!
                 cell.cellImgView.image = cell.viewImg
                 break;
             
@@ -115,7 +135,12 @@ class MenuTableViewController: UITableViewController {
                 cell.viewImg = (UIImage(named: "Lock Filled-50")?.withRenderingMode(.alwaysTemplate))!
                 cell.cellImgView.image = cell.viewImg
                 break;
-            
+            case 6:
+                cell.viewText = "Sign Out"
+                cell.viewName.text = cell.viewText
+                cell.viewImg = (UIImage(named: "Exit Filled-50")?.withRenderingMode(.alwaysTemplate))!
+                cell.cellImgView.image = cell.viewImg
+                break;
             
             default:
                 break;

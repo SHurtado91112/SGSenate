@@ -11,6 +11,8 @@ import UIKit
 
 class Util: NSObject
 {
+    static var onSignOutNotification = "onSignOutNotification"
+    
     class func invokeAlertMethod(_ strTitle: NSString, strBody: NSString, delegate: AnyObject?)
     {
         let alert = UIAlertController(title: strTitle as String, message: strBody as String, preferredStyle: .alert)

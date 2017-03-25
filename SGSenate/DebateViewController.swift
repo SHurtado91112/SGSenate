@@ -145,7 +145,7 @@ class DebateViewController: UIViewController, SideMenuControllerDelegate, UITabl
         else
         {
             let message = "You have already joined the session once."
-            Util.invokeAlertMethod("Sorry", strBody: message as NSString, delegate: self)
+            self.displayAlert("Error", message: message)
         }
         
         
@@ -167,6 +167,16 @@ class DebateViewController: UIViewController, SideMenuControllerDelegate, UITabl
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
+    
+    func displayAlert(_ title: String, message: String)
+    {
+        let alert = UIAlertController(title: title, message: message, preferredStyle: UIAlertControllerStyle.alert)
+        alert.addAction((UIAlertAction(title: "OK", style: .default, handler: { (action) in
+            self.dismiss(animated: true, completion: nil)
+        })))
+        self.present(alert, animated: true, completion: nil)
+    }
+    
     
     
     /*

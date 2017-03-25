@@ -26,6 +26,7 @@
 		286D3DE11E4D1FF4007F9A1C /* DotsLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 286D3DE01E4D1FF4007F9A1C /* DotsLoader.swift */; };
 		286D3DE61E4D27D1007F9A1C /* BillCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 286D3DE51E4D27D1007F9A1C /* BillCell.swift */; };
 		286D3DE91E4D65E5007F9A1C /* MiscCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 286D3DE81E4D65E5007F9A1C /* MiscCell.swift */; };
+		28BBC04A1E86183A00114924 /* Reachability.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28BBC0491E86183A00114924 /* Reachability.swift */; };
 		28C733B71E7198770046F9D7 /* FloorCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28C733B61E7198770046F9D7 /* FloorCell.swift */; };
 		28C733B91E7198880046F9D7 /* QueueCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28C733B81E7198880046F9D7 /* QueueCell.swift */; };
 		28C733BB1E71AAF00046F9D7 /* AdminDebateTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28C733BA1E71AAF00046F9D7 /* AdminDebateTableViewController.swift */; };
@@ -59,6 +60,7 @@
 		286D3DE01E4D1FF4007F9A1C /* DotsLoader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DotsLoader.swift; sourceTree = "<group>"; };
 		286D3DE51E4D27D1007F9A1C /* BillCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BillCell.swift; sourceTree = "<group>"; };
 		286D3DE81E4D65E5007F9A1C /* MiscCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MiscCell.swift; sourceTree = "<group>"; };
+		28BBC0491E86183A00114924 /* Reachability.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Reachability.swift; sourceTree = "<group>"; };
 		28C733B61E7198770046F9D7 /* FloorCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FloorCell.swift; sourceTree = "<group>"; };
 		28C733B81E7198880046F9D7 /* QueueCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QueueCell.swift; sourceTree = "<group>"; };
 		28C733BA1E71AAF00046F9D7 /* AdminDebateTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AdminDebateTableViewController.swift; sourceTree = "<group>"; };
@@ -106,6 +108,7 @@
 			children = (
 				286D3DAE1E4ADDD6007F9A1C /* AppDelegate.swift */,
 				28298A371E5DE97700B1AF01 /* Util.swift */,
+				28BBC0491E86183A00114924 /* Reachability.swift */,
 			);
 			name = Util;
 			sourceTree = "<group>";
@@ -365,6 +368,7 @@
 				28C81E321E6DDABE008B487B /* BillLinkCell.swift in Sources */,
 				286D3DE61E4D27D1007F9A1C /* BillCell.swift in Sources */,
 				28298A381E5DE97700B1AF01 /* Util.swift in Sources */,
+				28BBC04A1E86183A00114924 /* Reachability.swift in Sources */,
 				286D3DCF1E4B8F9D007F9A1C /* menuViewCell.swift in Sources */,
 				286D3DAF1E4ADDD6007F9A1C /* AppDelegate.swift in Sources */,
 				286D3DCC1E4B8E2C007F9A1C /* MenuTableViewController.swift in Sources */,
@@ -497,11 +501,13 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = E55B666VZ8;
+				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = SGSenate/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.StevenHurtado.SGSenate;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 3.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
 		};
@@ -512,11 +518,13 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = E55B666VZ8;
+				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = SGSenate/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.StevenHurtado.SGSenate;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 3.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
 		};

@@ -7,11 +7,10 @@
 //
 
 import UIKit
-import SideMenuController
 import Firebase
 import FirebaseAuthUI
 
-class LogInViewController: UIViewController, SideMenuControllerDelegate, UITextFieldDelegate
+class LogInViewController: UIViewController, UITextFieldDelegate
 {
     
     @IBOutlet weak var usernameTextField: UITextField!
@@ -34,18 +33,8 @@ class LogInViewController: UIViewController, SideMenuControllerDelegate, UITextF
         self.effectView.isHidden = false
         self.effectView.alpha = 0
         
-        sideMenuController?.delegate = self
-        
         self.signInBtn.layer.cornerRadius = 4
         self.dontBtn.layer.cornerRadius = 4
-    }
-    
-    func sideMenuControllerDidHide(_ sideMenuController: SideMenuController) {
-        print(#function)
-    }
-    
-    func sideMenuControllerDidReveal(_ sideMenuController: SideMenuController) {
-        print(#function)
     }
     
     @IBAction func signInPressed(_ sender: Any)
@@ -53,7 +42,7 @@ class LogInViewController: UIViewController, SideMenuControllerDelegate, UITextF
         if(self.usernameTextField.text == "" || self.usernameTextField.text == "")
         {
             let message = "Please, no blanks for email or password."
-            Util.invokeAlertMethod("Error", strBody: message as NSString, delegate: nil)
+            self.displayAlert("Error", message: message)
             return
         }
         
@@ -73,8 +62,8 @@ class LogInViewController: UIViewController, SideMenuControllerDelegate, UITextF
         guard let email = self.usernameTextField.text, let password = self.passwordTextField.text
         else
         {
-            let message = "Invalid email/password."
-            Util.invokeAlertMethod("Error", strBody: message as NSString, delegate: nil)
+            let message = "Invalid email and/or password."
+            self.displayAlert("Error", message: message)
             return
         }
         
@@ -84,9 +73,8 @@ class LogInViewController: UIViewController, SideMenuControllerDelegate, UITextF
             {
                 print("Error: \(error?.localizedDescription)")
                 
-                let message = error?.localizedDescription
-                
-                Util.invokeAlertMethod("Error", strBody: message! as NSString, delegate: nil)
+                let message = (error?.localizedDescription)!
+                self.displayAlert("Error", message: message)
                 
                 return
             }
@@ -109,6 +97,8 @@ class LogInViewController: UIViewController, SideMenuControllerDelegate, UITextF
                 if(error != nil)
                 {
                     print("Error: \(error?.localizedDescription)")
+                    let message = (error?.localizedDescription)!
+                    self.displayAlert("Error", message: message)
                     return
                 }
 
@@ -116,7 +106,7 @@ class LogInViewController: UIViewController, SideMenuControllerDelegate, UITextF
                 self.usernameTextField.text = ""
                 self.passwordTextField.text = ""
                 
-                self.performSegue(withIdentifier: "validVoterSegue", sender: self)
+                self.performSegue(withIdentifier: "verifiedSegue", sender: self)
             })
             
         })
@@ -127,8 +117,8 @@ class LogInViewController: UIViewController, SideMenuControllerDelegate, UITextF
         guard let email = self.usernameTextField.text, let password = self.passwordTextField.text
             else
         {
-            let message = "Invalid email/password."
-            Util.invokeAlertMethod("Error", strBody: message as NSString, delegate: nil)
+            let message = "Invalid email and/or password."
+            self.displayAlert("Error", message: message)
             return
         }
         
@@ -137,7 +127,9 @@ class LogInViewController: UIViewController, SideMenuControllerDelegate, UITextF
             
             if(error != nil)
             {
-                print("Error: \(error?.localizedDescription)")
+                print("Error: \((error?.localizedDescription)!)")
+                let message = (error?.localizedDescription)!
+                self.displayAlert("Error", message: message)
                 return
             }
 
@@ -146,7 +138,7 @@ class LogInViewController: UIViewController, SideMenuControllerDelegate, UITextF
             self.usernameTextField.text = ""
             self.passwordTextField.text = ""
             
-            self.performSegue(withIdentifier: "validVoterSegue", sender: self)
+            self.performSegue(withIdentifier: "verifiedSegue", sender: self)
         })
     }
     
@@ -188,6 +180,15 @@ class LogInViewController: UIViewController, SideMenuControllerDelegate, UITextF
         // Dispose of any resources that can be recreated.
     }
     
+    
+    func displayAlert(_ title: String, message: String)
+    {
+        let alert = UIAlertController(title: title, message: message, preferredStyle: UIAlertControllerStyle.alert)
+        alert.addAction((UIAlertAction(title: "OK", style: .default, handler: { (action) in
+            self.dismiss(animated: true, completion: nil)
+        })))
+        self.present(alert, animated: true, completion: nil)
+    }
     
     /*
      // MARK: - Navigation
