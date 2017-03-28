@@ -78,12 +78,11 @@ class MiscViewController: UIViewController, SideMenuControllerDelegate, UITableV
     {
         let cell = tableView.dequeueReusableCell(withIdentifier: "miscCell", for: indexPath) as! MiscCell
         
-        cell.miscLabel.text = "Misc. Item \(indexPath.row + 1)"
-        
         let snap = self.misc[indexPath.row]
         let val = snap.value as! [String: String]
         
         cell.link = val["miscLink"] ?? "[miscLink]"
+        cell.name = val["miscName"] ?? "[miscName]"
 
         return cell
     }
@@ -142,6 +141,7 @@ class MiscViewController: UIViewController, SideMenuControllerDelegate, UITableV
             print(cell.link)
             
             vc.targetURLString = cell.link
+            vc.targetName = cell.name
         }
      }
     

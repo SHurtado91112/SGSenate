@@ -17,7 +17,10 @@ class BillLinkCell: UITableViewCell
     
     @IBOutlet weak var billTextField: UITextField!
     
+    @IBOutlet weak var billNameTextField: UITextField!
+    
     var originalText : String?
+    var originalName : String?
     var key : String?
     
     override func awakeFromNib()
@@ -25,6 +28,10 @@ class BillLinkCell: UITableViewCell
         super.awakeFromNib()
         
         originalText = billTextField.text!
+        originalName = billNameTextField.text!
+        
+        billNameTextField.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
+        billNameTextField.addTarget(self, action: #selector(textFieldDidEnd(_:)), for: .editingDidEnd)
         
         billTextField.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
         billTextField.addTarget(self, action: #selector(textFieldDidEnd(_:)), for: .editingDidEnd)
@@ -40,10 +47,21 @@ class BillLinkCell: UITableViewCell
     
     func textFieldDidChange(_ textField: UITextField)
     {
-        if(!billTextField.text!.isEmpty && billTextField.text! != originalText)
+        if(textField == billTextField)
         {
-            let data = ["billLink": textField.text! as String]
-            sendMessage(data: data)
+            if(!billTextField.text!.isEmpty && billTextField.text! != originalText)
+            {
+                let data = ["billLink": textField.text! as String]
+                sendMessage(data: data)
+            }
+        }
+        else
+        {
+            if(!billNameTextField.text!.isEmpty && billNameTextField.text! != originalName)
+            {
+                let data = ["billName": textField.text! as String]
+                sendMessage(data: data)
+            }
         }
     }
     

@@ -26,6 +26,8 @@
 		286D3DE11E4D1FF4007F9A1C /* DotsLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 286D3DE01E4D1FF4007F9A1C /* DotsLoader.swift */; };
 		286D3DE61E4D27D1007F9A1C /* BillCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 286D3DE51E4D27D1007F9A1C /* BillCell.swift */; };
 		286D3DE91E4D65E5007F9A1C /* MiscCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 286D3DE81E4D65E5007F9A1C /* MiscCell.swift */; };
+		287C9AE21E893F0000845CDF /* VoteCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 287C9AE11E893F0000845CDF /* VoteCell.swift */; };
+		287C9AE41E8952D200845CDF /* VoteHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 287C9AE31E8952D200845CDF /* VoteHeader.swift */; };
 		28BBC04A1E86183A00114924 /* Reachability.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28BBC0491E86183A00114924 /* Reachability.swift */; };
 		28C733B71E7198770046F9D7 /* FloorCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28C733B61E7198770046F9D7 /* FloorCell.swift */; };
 		28C733B91E7198880046F9D7 /* QueueCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28C733B81E7198880046F9D7 /* QueueCell.swift */; };
@@ -60,6 +62,8 @@
 		286D3DE01E4D1FF4007F9A1C /* DotsLoader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DotsLoader.swift; sourceTree = "<group>"; };
 		286D3DE51E4D27D1007F9A1C /* BillCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BillCell.swift; sourceTree = "<group>"; };
 		286D3DE81E4D65E5007F9A1C /* MiscCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MiscCell.swift; sourceTree = "<group>"; };
+		287C9AE11E893F0000845CDF /* VoteCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VoteCell.swift; sourceTree = "<group>"; };
+		287C9AE31E8952D200845CDF /* VoteHeader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VoteHeader.swift; sourceTree = "<group>"; };
 		28BBC0491E86183A00114924 /* Reachability.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Reachability.swift; sourceTree = "<group>"; };
 		28C733B61E7198770046F9D7 /* FloorCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FloorCell.swift; sourceTree = "<group>"; };
 		28C733B81E7198880046F9D7 /* QueueCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QueueCell.swift; sourceTree = "<group>"; };
@@ -175,7 +179,7 @@
 				286D3DE41E4D27BA007F9A1C /* Bills */,
 				28C733B51E7198600046F9D7 /* Debate */,
 				286D3DDA1E4BBEAA007F9A1C /* LogInViewController.swift */,
-				286D3DDC1E4BBEB5007F9A1C /* VoteViewController.swift */,
+				287C9AE01E893C0600845CDF /* Voting */,
 				28C81E2A1E6DC7BE008B487B /* Admin */,
 			);
 			name = ViewControllers;
@@ -197,6 +201,16 @@
 				286D3DE81E4D65E5007F9A1C /* MiscCell.swift */,
 			);
 			name = Misc;
+			sourceTree = "<group>";
+		};
+		287C9AE01E893C0600845CDF /* Voting */ = {
+			isa = PBXGroup;
+			children = (
+				286D3DDC1E4BBEB5007F9A1C /* VoteViewController.swift */,
+				287C9AE11E893F0000845CDF /* VoteCell.swift */,
+				287C9AE31E8952D200845CDF /* VoteHeader.swift */,
+			);
+			name = Voting;
 			sourceTree = "<group>";
 		};
 		28C733B51E7198600046F9D7 /* Debate */ = {
@@ -358,6 +372,7 @@
 				286D3DD71E4BBE3A007F9A1C /* DebateViewController.swift in Sources */,
 				286D3DC91E4B74D3007F9A1C /* menuController.swift in Sources */,
 				28C733B71E7198770046F9D7 /* FloorCell.swift in Sources */,
+				287C9AE41E8952D200845CDF /* VoteHeader.swift in Sources */,
 				286D3DE91E4D65E5007F9A1C /* MiscCell.swift in Sources */,
 				286D3DD31E4BBE1A007F9A1C /* AgendaViewController.swift in Sources */,
 				28C81E301E6DDAA2008B487B /* MiscLinkCell.swift in Sources */,
@@ -368,6 +383,7 @@
 				28C81E321E6DDABE008B487B /* BillLinkCell.swift in Sources */,
 				286D3DE61E4D27D1007F9A1C /* BillCell.swift in Sources */,
 				28298A381E5DE97700B1AF01 /* Util.swift in Sources */,
+				287C9AE21E893F0000845CDF /* VoteCell.swift in Sources */,
 				28BBC04A1E86183A00114924 /* Reachability.swift in Sources */,
 				286D3DCF1E4B8F9D007F9A1C /* menuViewCell.swift in Sources */,
 				286D3DAF1E4ADDD6007F9A1C /* AppDelegate.swift in Sources */,

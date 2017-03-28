@@ -9,6 +9,11 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
+		<key>DLRadioButton.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
 		<key>FBSDKCoreKit.xcscheme</key>
 		<dict>
 			<key>isShown</key>
@@ -57,17 +62,12 @@
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
+		<key>0A6044A5A923153A79A7560D4CFF070E</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
 		<key>107A9565F9DF88517DFD3E28C05B2B96</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>25F61E1E82FE1886F4D4349EEC8CC021</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>4298E5BBD6F4B89772DA1280B522235E</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -77,12 +77,17 @@
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>463E625A797FF2105FC1759AD2204DD9</key>
+		<key>52D36897D13536EC593BAD6AD01E6B26</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
 		<key>681BE6E3D02A43F9BA63777AC435C8FD</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>A2EC2B4456BEBC592A997F1F676FCFB5</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -103,6 +108,11 @@
 			<true/>
 		</dict>
 		<key>BEF7E6E85DB5CDE5D7A18F4F2EB8494B</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>F6A77E2753C279F67F70C5C21D6FAE15</key>
 		<dict>
 			<key>primary</key>
 			<true/>

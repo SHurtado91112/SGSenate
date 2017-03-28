@@ -15,16 +15,19 @@ class MiscCell: UITableViewCell {
     @IBOutlet weak var miscLabel: UILabel!
     
     var link = ""
+    var name = ""
     
-    override func awakeFromNib() {
+    override func awakeFromNib()
+    {
         super.awakeFromNib()
-        
         
         miscView.layer.shadowColor = UIColor.black.cgColor
         miscView.layer.shadowOpacity = 0.9
         miscView.layer.shadowOffset = CGSize(width: 0.0, height: 2.0)
         miscView.layer.shadowRadius = 10
         miscView.layer.shouldRasterize = true
+        
+        self.miscLabel.text = name
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {

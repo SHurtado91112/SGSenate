@@ -15,7 +15,11 @@ class MiscLinkCell: UITableViewCell
     @IBOutlet weak var miscLabel: UILabel!
     @IBOutlet weak var miscTextField: UITextField!
     
+    @IBOutlet weak var miscDetailTextField: UITextField!
+    
     var originalText : String?
+    var originalDetail : String?
+    
     var key : String?
     
     override func awakeFromNib()
@@ -23,9 +27,13 @@ class MiscLinkCell: UITableViewCell
         super.awakeFromNib()
         
         originalText = miscTextField.text!
+        originalDetail = miscDetailTextField.text!
         
-        miscTextField.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
-        miscTextField.addTarget(self, action: #selector(textFieldDidEnd(_:)), for: .editingDidEnd)
+        miscDetailTextField.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
+        miscDetailTextField.addTarget(self, action: #selector(textFieldDidEnd(_:)), for: .editingDidEnd)
+        
+        miscDetailTextField.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
+        miscDetailTextField.addTarget(self, action: #selector(textFieldDidEnd(_:)), for: .editingDidEnd)
     }
     
     func textFieldDidEnd(_ textField: UITextField)
@@ -37,11 +45,23 @@ class MiscLinkCell: UITableViewCell
     
     func textFieldDidChange(_ textField: UITextField)
     {
-        if(!miscTextField.text!.isEmpty && miscTextField.text! != originalText)
+        if(textField == miscTextField)
         {
-            let data = ["miscLink": textField.text! as String]
-            sendMessage(data: data)
+            if(!miscTextField.text!.isEmpty && miscTextField.text! != originalText)
+            {
+                let data = ["miscLink": textField.text! as String]
+                sendMessage(data: data)
+            }
         }
+        else
+        {
+            if(!miscTextField.text!.isEmpty && miscTextField.text! != originalText)
+            {
+                let data = ["miscDetail": textField.text! as String]
+                sendMessage(data: data)
+            }
+        }
+        
     }
     
     func sendMessage(data: [String:String])

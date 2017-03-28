@@ -15,6 +15,9 @@ class ItemsViewController: UIViewController, UIWebViewDelegate
     @IBOutlet weak var loader: DotsLoader!
     
     var targetURLString : String!
+    var targetName : String!
+    
+    @IBOutlet weak var detailLabel: UILabel!
     
     override func viewDidLoad()
     {
@@ -29,13 +32,14 @@ class ItemsViewController: UIViewController, UIWebViewDelegate
         
         let request = NSURLRequest(url: targetURL as URL)
         webView.loadRequest(request as URLRequest)
+        
+        self.detailLabel.text = targetName
     }
     
     func webViewDidFinishLoad(_ webView: UIWebView)
     {
         print("reached")
         loader.alpha = 1
-        
         
         UIView.animate(withDuration: 0.3, animations: {
             self.loader.alpha = 0

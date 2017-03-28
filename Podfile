@@ -8,6 +8,7 @@ target 'SGSenate' do
   # Pods for SGSenate
 	pod 'SideMenuController'
     pod 'LUExpandableTableView'
+    pod 'DLRadioButton', '~> 1.4'
     pod 'Firebase/Storage'
     pod 'Firebase/Core'
     pod 'Firebase/Database'

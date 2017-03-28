@@ -101,12 +101,11 @@ class BillsViewController: UIViewController, SideMenuControllerDelegate, UITable
     {
         let cell = tableView.dequeueReusableCell(withIdentifier: "billCell", for: indexPath) as! BillCell
         
-        cell.billLabel.text = "Bill \(indexPath.row + 1)"
-        
         let snap = self.bills[indexPath.row]
         let val = snap.value as! [String: String]
         
         cell.link = val["billLink"] ?? "[billLink]"
+        cell.name = val["billName"] ?? "[billName]"
         
         return cell
     }
@@ -146,6 +145,7 @@ class BillsViewController: UIViewController, SideMenuControllerDelegate, UITable
             print(cell.link)
             
             vc.targetURLString = cell.link
+            vc.targetName = cell.name
         }
      }
 }
