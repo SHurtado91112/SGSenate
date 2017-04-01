@@ -82,8 +82,10 @@ class MiscViewController: UIViewController, SideMenuControllerDelegate, UITableV
         let val = snap.value as! [String: String]
         
         cell.link = val["miscLink"] ?? "[miscLink]"
-        cell.name = val["miscName"] ?? "[miscName]"
+        cell.name = val["miscDetail"] ?? "[miscDetail]"
 
+        cell.miscLabel.text = cell.name!
+        
         return cell
     }
     

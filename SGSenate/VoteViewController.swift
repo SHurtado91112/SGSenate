@@ -10,20 +10,27 @@ import UIKit
 import SideMenuController
 import DLRadioButton
 
-class VoteViewController: UIViewController, SideMenuControllerDelegate, UITableViewDelegate, UITableViewDataSource
+class VoteViewController: UIViewController, SideMenuControllerDelegate, UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate
 {
     
     @IBOutlet weak var tableView: UITableView!
     
+    @IBOutlet weak var writeOptionTextField: UITextField!
+    
+    var origPos: CGPoint!
+    
     override func viewDidLoad()
     {
         super.viewDidLoad()
+        self.origPos = self.view.frame.origin
+        self.writeOptionTextField.delegate = self
+        
         sideMenuController?.delegate = self
         tableView.delegate = self
         tableView.dataSource = self
-        //let radioBtn = LT
         
-        // Do any additional setup after loading the view.
+        NotificationCenter.default.addObserver(self, selector: #selector(self.keyboardNotification(notification:)), name: NSNotification.Name.UIKeyboardWillChangeFrame, object: nil)
+    
     }
     
     func numberOfSections(in tableView: UITableView) -> Int
@@ -57,7 +64,19 @@ class VoteViewController: UIViewController, SideMenuControllerDelegate, UITableV
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int
     {
-        return 1
+        switch(section)
+        {
+            case 0:
+                //bills
+            return 1
+            case 1:
+                //misc
+            return 1
+        default:
+                //write in
+            return 0
+        }
+        
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell
@@ -86,6 +105,62 @@ class VoteViewController: UIViewController, SideMenuControllerDelegate, UITableV
         
     }
     
+    func keyboardNotification(notification: NSNotification)
+    {
+        if let userInfo = notification.userInfo {
+            let endFrame = (userInfo[UIKeyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue
+            let duration:TimeInterval = (userInfo[UIKeyboardAnimationDurationUserInfoKey] as? NSNumber)?.doubleValue ?? 0
+            let animationCurveRawNSN = userInfo[UIKeyboardAnimationCurveUserInfoKey] as? NSNumber
+            let animationCurveRaw = animationCurveRawNSN?.uintValue ?? UIViewAnimationOptions.curveEaseInOut.rawValue
+            let animationCurve:UIViewAnimationOptions = UIViewAnimationOptions(rawValue: animationCurveRaw)
+            if (endFrame?.origin.y)! >= UIScreen.main.bounds.size.height {
+                
+            } else {
+                
+                print("animating")
+                UIView.animate(withDuration: 0.3, animations:
+                    {
+                        
+                        let yPos = self.origPos.y - (endFrame?.size.height ?? 20)
+                        self.view.frame.origin = CGPoint(x: 0, y: yPos)
+                        
+                        
+                })
+                
+                
+            }
+            UIView.animate(withDuration: duration,
+                           delay: TimeInterval(0),
+                           options: animationCurve,
+                           animations: { self.view.layoutIfNeeded() },
+                           completion: nil)
+        }
+    }
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool
+    {
+        UIView.animate(withDuration: 0.1)
+        {
+            self.view.frame.origin = self.origPos
+        }
+        
+        self.view.endEditing(true)
+        resignFirstResponder()
+        
+        return true
+    }
+    
+    func textFieldDidBeginEditing(_ textField: UITextField)
+    {
+        print("Did begin editing.")
+        
+        UIView.animate(withDuration: 0.1)
+        {
+            self.view.frame.origin = self.origPos
+        }
+
+    }
+    
     func sideMenuControllerDidHide(_ sideMenuController: SideMenuController)
     {
         print(#function)
@@ -95,6 +170,8 @@ class VoteViewController: UIViewController, SideMenuControllerDelegate, UITableV
     {
         print(#function)
     }
+    
+    
     
     override func didReceiveMemoryWarning()
     {

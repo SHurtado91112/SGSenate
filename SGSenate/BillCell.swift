@@ -15,7 +15,7 @@ class BillCell: UITableViewCell
     @IBOutlet weak var billView: UIView!
     
     var link = ""
-    var name = ""
+    var name : String?
     
     override func awakeFromNib()
     {

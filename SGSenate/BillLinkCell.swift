@@ -10,7 +10,7 @@ import UIKit
 import Firebase
 import FirebaseAuthUI
 
-class BillLinkCell: UITableViewCell
+class BillLinkCell: UITableViewCell, UITextFieldDelegate
 {
 
     @IBOutlet weak var billLabel: UILabel!
@@ -47,25 +47,23 @@ class BillLinkCell: UITableViewCell
     
     func textFieldDidChange(_ textField: UITextField)
     {
-        if(textField == billTextField)
+        if(!billTextField.text!.isEmpty && billTextField.text! != originalText)
         {
-            if(!billTextField.text!.isEmpty && billTextField.text! != originalText)
-            {
-                let data = ["billLink": textField.text! as String]
-                sendMessage(data: data)
-            }
-        }
-        else
-        {
-            if(!billNameTextField.text!.isEmpty && billNameTextField.text! != originalName)
-            {
-                let data = ["billName": textField.text! as String]
-                sendMessage(data: data)
-            }
+            let data = ["billLink": billTextField.text! as String, "billName": billNameTextField.text!]
+            sendMessage(data: data)
         }
     }
     
-    func sendMessage(data: [String:String])
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool
+    {
+        if(textField == self.billNameTextField)
+        {
+            self.billTextField.becomeFirstResponder()
+        }
+        return true
+    }
+    
+    func sendMessage(data: [String : String])
     {
         let mdata = data
         

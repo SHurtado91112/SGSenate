@@ -37,6 +37,8 @@
 		28C81E301E6DDAA2008B487B /* MiscLinkCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28C81E2F1E6DDAA2008B487B /* MiscLinkCell.swift */; };
 		28C81E321E6DDABE008B487B /* BillLinkCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28C81E311E6DDABE008B487B /* BillLinkCell.swift */; };
 		28C81E341E6DE15E008B487B /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 28C81E331E6DE15E008B487B /* GoogleService-Info.plist */; };
+		28F0A5431E902AA200BA5394 /* ExpandResultsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28F0A5421E902AA200BA5394 /* ExpandResultsCell.swift */; };
+		28F0A5451E902AB100BA5394 /* ExpandTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28F0A5441E902AB100BA5394 /* ExpandTableViewController.swift */; };
 		7DBF2D71809F0FD7AA049BF9 /* Pods_SGSenate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EF49B91AD749F461CC71E043 /* Pods_SGSenate.framework */; };
 /* End PBXBuildFile section */
 
@@ -73,6 +75,8 @@
 		28C81E2F1E6DDAA2008B487B /* MiscLinkCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MiscLinkCell.swift; sourceTree = "<group>"; };
 		28C81E311E6DDABE008B487B /* BillLinkCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BillLinkCell.swift; sourceTree = "<group>"; };
 		28C81E331E6DE15E008B487B /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		28F0A5421E902AA200BA5394 /* ExpandResultsCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExpandResultsCell.swift; sourceTree = "<group>"; };
+		28F0A5441E902AB100BA5394 /* ExpandTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExpandTableViewController.swift; sourceTree = "<group>"; };
 		47D4CCBCBF13E33080D289D3 /* Pods-SGSenate.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SGSenate.debug.xcconfig"; path = "Pods/Target Support Files/Pods-SGSenate/Pods-SGSenate.debug.xcconfig"; sourceTree = "<group>"; };
 		E0D8CA8C4D24DFF84943FD78 /* Pods-SGSenate.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SGSenate.release.xcconfig"; path = "Pods/Target Support Files/Pods-SGSenate/Pods-SGSenate.release.xcconfig"; sourceTree = "<group>"; };
 		EF49B91AD749F461CC71E043 /* Pods_SGSenate.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SGSenate.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -231,8 +235,18 @@
 				28C81E2D1E6DC7E5008B487B /* AdminSettingsViewController.swift */,
 				28C81E2F1E6DDAA2008B487B /* MiscLinkCell.swift */,
 				28C81E311E6DDABE008B487B /* BillLinkCell.swift */,
+				28F0A5411E902A6D00BA5394 /* ResultsTableViewController */,
 			);
 			name = Admin;
+			sourceTree = "<group>";
+		};
+		28F0A5411E902A6D00BA5394 /* ResultsTableViewController */ = {
+			isa = PBXGroup;
+			children = (
+				28F0A5421E902AA200BA5394 /* ExpandResultsCell.swift */,
+				28F0A5441E902AB100BA5394 /* ExpandTableViewController.swift */,
+			);
+			name = ResultsTableViewController;
 			sourceTree = "<group>";
 		};
 		C947AD49E276ABB7D9E641D7 /* Frameworks */ = {
@@ -368,6 +382,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				28F0A5431E902AA200BA5394 /* ExpandResultsCell.swift in Sources */,
 				286D3DD11E4B9CEA007F9A1C /* ContentViewController.swift in Sources */,
 				286D3DD71E4BBE3A007F9A1C /* DebateViewController.swift in Sources */,
 				286D3DC91E4B74D3007F9A1C /* menuController.swift in Sources */,
@@ -376,6 +391,7 @@
 				286D3DE91E4D65E5007F9A1C /* MiscCell.swift in Sources */,
 				286D3DD31E4BBE1A007F9A1C /* AgendaViewController.swift in Sources */,
 				28C81E301E6DDAA2008B487B /* MiscLinkCell.swift in Sources */,
+				28F0A5451E902AB100BA5394 /* ExpandTableViewController.swift in Sources */,
 				28C81E2E1E6DC7E5008B487B /* AdminSettingsViewController.swift in Sources */,
 				28C81E2C1E6DC7DC008B487B /* AdminLogInViewController.swift in Sources */,
 				28298A3B1E5DEC9B00B1AF01 /* ItemsViewController.swift in Sources */,
@@ -519,6 +535,7 @@
 				DEVELOPMENT_TEAM = E55B666VZ8;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = SGSenate/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.StevenHurtado.SGSenate;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -536,6 +553,7 @@
 				DEVELOPMENT_TEAM = E55B666VZ8;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = SGSenate/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.StevenHurtado.SGSenate;
 				PRODUCT_NAME = "$(TARGET_NAME)";

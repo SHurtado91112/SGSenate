@@ -63,13 +63,22 @@ class AgendaViewController: UIViewController, SideMenuControllerDelegate, UIWebV
         
             self._refHand = self.ref.child("agenda").observe(.value, with: { (snap: FIRDataSnapshot) in
                 
-                let val = snap.value as! [String : String]
-                self.link = val["link"] ?? "[link]"
+                let val = snap.value as! NSDictionary
+                self.link = (val["link"]) as? String ?? "[link]"
+
                 
-                let targetURL = URL(string: self.link)!
+                if let targetURL = URL(string: self.link)
+                {
+                    self.loader.startAnimating()
+                    let request = URLRequest(url: targetURL)
+                    self.webView.loadRequest(request)
+                }
+                else
+                {
+                    self.loader.stopAnimating()
+                    print("Error: invalid link or no link")
+                }
                 
-                let request = URLRequest(url: targetURL)
-                self.webView.loadRequest(request)
             })
         }
     }
@@ -82,7 +91,7 @@ class AgendaViewController: UIViewController, SideMenuControllerDelegate, UIWebV
             self.loader.alpha = 0
             self.webView.alpha = 1
         }, completion: { _ in
-            self.loader.removeFromSuperview()
+            self.loader.stopAnimating()
         })
     }
     
@@ -99,8 +108,8 @@ class AgendaViewController: UIViewController, SideMenuControllerDelegate, UIWebV
         //initialize master link text field
         self.ref = FIRDatabase.database().reference()
         self.ref.child("agenda").observe(.value, with: { (snap: FIRDataSnapshot) in
-            let val = snap.value as! [String : String]
-            self.link = val["link"] ?? "[link]"
+            let val = snap.value as! NSDictionary
+            self.link = (val["link"]) as? String ?? "[link]"
             
             let targetURL = NSURL(string: self.link)!
             

@@ -107,6 +107,8 @@ class BillsViewController: UIViewController, SideMenuControllerDelegate, UITable
         cell.link = val["billLink"] ?? "[billLink]"
         cell.name = val["billName"] ?? "[billName]"
         
+        cell.billLabel.text = cell.name!
+        
         return cell
     }
     

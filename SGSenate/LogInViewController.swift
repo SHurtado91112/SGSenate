@@ -16,6 +16,7 @@ class LogInViewController: UIViewController, UITextFieldDelegate
     @IBOutlet weak var usernameTextField: UITextField!
     
     @IBOutlet weak var signInBtn: UIButton!
+    var signInPos : CGPoint!
     
     @IBOutlet weak var dontBtn: UIButton!
     
@@ -23,25 +24,55 @@ class LogInViewController: UIViewController, UITextFieldDelegate
     
     @IBOutlet weak var effectView: UIVisualEffectView!
     
+    @IBOutlet weak var nameLabel: UILabel!
+    
+    @IBOutlet weak var nameTextField: UITextField!
+    
     var SignUp = false
     
     var ref : FIRDatabaseReference!
+    var user : FIRUser?
     
     override func viewDidLoad()
     {
         super.viewDidLoad()
+    
+        self.nameLabel.isHidden = false
+        self.nameTextField.isHidden = false
+        
+        self.nameLabel.alpha = 0
+        self.nameTextField.alpha = 0
+        
+        self.signInPos = self.signInBtn.frame.origin
+        
         self.effectView.isHidden = false
         self.effectView.alpha = 0
         
         self.signInBtn.layer.cornerRadius = 4
         self.dontBtn.layer.cornerRadius = 4
+        
+        self.authConfig()
+    }
+    
+    func authConfig()
+    {
+        FIRAuth.auth()?.addStateDidChangeListener({ (auth: FIRAuth, user: FIRUser?) in
+            if let activeUser = user
+            {
+                if(self.user != activeUser)
+                {
+                    self.user = activeUser
+                   self.performSegue(withIdentifier: "verifiedSegue", sender: self)
+                }
+            }
+        })
     }
     
     @IBAction func signInPressed(_ sender: Any)
     {
-        if(self.usernameTextField.text == "" || self.usernameTextField.text == "")
+        if(self.usernameTextField.text == "" || self.passwordTextField.text == "" || (SignUp  && self.nameTextField.text == ""))
         {
-            let message = "Please, no blanks for email or password."
+            let message = "Please, no blanks for email, name, or password."
             self.displayAlert("Error", message: message)
             return
         }
@@ -124,7 +155,6 @@ class LogInViewController: UIViewController, UITextFieldDelegate
         
         FIRAuth.auth()?.signIn(withEmail: email, password: password, completion: { (user: FIRUser?, error: Error?) in
             
-            
             if(error != nil)
             {
                 print("Error: \((error?.localizedDescription)!)")
@@ -148,11 +178,27 @@ class LogInViewController: UIViewController, UITextFieldDelegate
         
         if(self.SignUp)
         {
+            UIView.animate(withDuration: 0.3, animations:
+                {
+                    self.nameLabel.alpha = 1
+                    self.nameTextField.alpha = 1
+                    
+                    self.signInBtn.frame.origin.y = self.signInBtn.frame.origin.y + 2*(self.nameTextField.frame.height)
+            })
+            
             self.signInBtn.setTitle("Sign Up!",for: .normal)
             self.dontBtn.setTitle("Already have an account?",for: .normal)
         }
         else
         {
+            UIView.animate(withDuration: 0.3, animations:
+                {
+                    self.nameLabel.alpha = 0
+                    self.nameTextField.alpha = 0
+                    
+                    self.signInBtn.frame.origin = self.signInPos
+            })
+            
             self.signInBtn.setTitle("Sign In!",for: .normal)
             self.dontBtn.setTitle("Don't have an account?",for: .normal)
         }

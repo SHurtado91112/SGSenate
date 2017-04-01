@@ -10,7 +10,7 @@ import UIKit
 import Firebase
 import FirebaseAuthUI
 
-class MiscLinkCell: UITableViewCell
+class MiscLinkCell: UITableViewCell, UITextFieldDelegate
 {
     @IBOutlet weak var miscLabel: UILabel!
     @IBOutlet weak var miscTextField: UITextField!
@@ -32,8 +32,8 @@ class MiscLinkCell: UITableViewCell
         miscDetailTextField.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
         miscDetailTextField.addTarget(self, action: #selector(textFieldDidEnd(_:)), for: .editingDidEnd)
         
-        miscDetailTextField.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
-        miscDetailTextField.addTarget(self, action: #selector(textFieldDidEnd(_:)), for: .editingDidEnd)
+        miscTextField.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
+        miscTextField.addTarget(self, action: #selector(textFieldDidEnd(_:)), for: .editingDidEnd)
     }
     
     func textFieldDidEnd(_ textField: UITextField)
@@ -45,23 +45,17 @@ class MiscLinkCell: UITableViewCell
     
     func textFieldDidChange(_ textField: UITextField)
     {
-        if(textField == miscTextField)
+        let data = ["miscLink": miscTextField.text! as String, "miscDetail": miscDetailTextField.text! as String]
+        sendMessage(data: data)
+    }
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool
+    {
+        if(textField == self.miscDetailTextField)
         {
-            if(!miscTextField.text!.isEmpty && miscTextField.text! != originalText)
-            {
-                let data = ["miscLink": textField.text! as String]
-                sendMessage(data: data)
-            }
+            self.miscTextField.becomeFirstResponder()
         }
-        else
-        {
-            if(!miscTextField.text!.isEmpty && miscTextField.text! != originalText)
-            {
-                let data = ["miscDetail": textField.text! as String]
-                sendMessage(data: data)
-            }
-        }
-        
+        return true
     }
     
     func sendMessage(data: [String:String])

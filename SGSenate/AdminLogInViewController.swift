@@ -59,10 +59,10 @@ class AdminLogInViewController: UIViewController, UITextFieldDelegate
         adminRef.observe(.value)
         { (snap: FIRDataSnapshot) in
             
-            let snapDictionary = snap.value as! [String: String]
+            let snapDictionary = snap.value as! NSDictionary
             
-            let emailRef = snapDictionary["email"]
-            let passRef = snapDictionary["passcode"]
+            let emailRef = snapDictionary["email"] as! String
+            let passRef = snapDictionary["passcode"] as! String
             
             if(email == emailRef && password == passRef)
             {

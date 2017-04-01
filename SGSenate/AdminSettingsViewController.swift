@@ -174,15 +174,21 @@ class AdminSettingsViewController: UIViewController, UITableViewDelegate, UITabl
         let newVal = Int(self.billStepper.value)
         self.billNumLabel.text = "\(newVal)"
         
+        
         if(oldVal! < newVal)
         {
-            ref.child("bills").childByAutoId().setValue(["billLink":""])
+//            ref.child("bills").childByAutoId().setValue(["billLink":""])
+            let keyRef = ref.child("bills").childByAutoId()
+            let key = keyRef.key
+            
+            let childUpdates = ["/bills/\(key)": ["billLink":"", "billName":""]]
+            ref.updateChildValues(childUpdates)
         }
         else if(oldVal! > newVal)
         {
             //key to remove
             let key = self.bills[self.bills.count-1].1
-
+            
             //remove child
             ref.child("bills").child(key).removeValue()
             
@@ -199,9 +205,15 @@ class AdminSettingsViewController: UIViewController, UITableViewDelegate, UITabl
         let newVal = Int(self.miscStepper.value)
         self.miscNumLabel.text = "\(newVal)"
         
+        
         if(oldVal! < newVal)
         {
-            ref.child("misc").childByAutoId().setValue(["miscLink":""])
+//            ref.child("misc").childByAutoId().setValue(["miscLink":""])
+            let keyRef = ref.child("misc").childByAutoId()
+            let key = keyRef.key
+            
+            let childUpdates = ["/misc/\(key)": ["miscLink":"", "miscDetail":""]]
+            ref.updateChildValues(childUpdates)
         }
         else if(oldVal! > newVal)
         {
@@ -234,9 +246,10 @@ class AdminSettingsViewController: UIViewController, UITableViewDelegate, UITabl
             let snap = misc[indexPath.row].0
             let key = misc[indexPath.row].1
             
-            let value = snap.value as! [String: String]
+            let value = snap.value as! NSDictionary
             
-            cell.miscTextField.text = value["miscLink"] ?? "[miscLink]"
+            cell.miscTextField.text = (value["miscLink"]) as? String ?? "[miscLink]"
+            cell.miscDetailTextField.text = (value["miscDetail"]) as? String ?? "[miscDetail]"
             cell.key = key
             cell.miscLabel.text = "Misc. #\(indexPath.row + 1)"
 
@@ -249,9 +262,10 @@ class AdminSettingsViewController: UIViewController, UITableViewDelegate, UITabl
             let snap = bills[indexPath.row].0
             let key = bills[indexPath.row].1
             
-            let value = snap.value as! [String: String]
+            let value = snap.value as! NSDictionary
             
-            cell.billTextField.text = value["billLink"] ?? "[billLink]"
+            cell.billTextField.text = (value["billLink"]) as? String ?? "[billLink]"
+            cell.billNameTextField.text = (value["billName"]) as? String ?? "[billName]"
             cell.key = key
             cell.billLabel.text = "Bill #\(indexPath.row + 1)"
 
@@ -296,7 +310,7 @@ class AdminSettingsViewController: UIViewController, UITableViewDelegate, UITabl
                 
                 switch(self.textTag)
                 {
-                    case 2:
+                    case 3,4:
                         print("animating")
                         UIView.animate(withDuration: 0.3, animations:
                             {
@@ -336,6 +350,7 @@ class AdminSettingsViewController: UIViewController, UITableViewDelegate, UITabl
         
         self.view.endEditing(true)
         resignFirstResponder()
+            
         return true
     }
     
