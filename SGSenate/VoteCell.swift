@@ -8,6 +8,7 @@
 
 import UIKit
 import DLRadioButton
+import Firebase
 
 class VoteCell: UITableViewCell
 {
@@ -20,7 +21,13 @@ class VoteCell: UITableViewCell
     
     @IBOutlet weak var writeInTextField: UITextField!
     
+    var indexPath = IndexPath()
+    
     var otherButtons : [DLRadioButton] = [DLRadioButton]()
+    
+    var ref : FIRDatabaseReference!
+    var user: FIRUser?
+    var cellSnap: FIRDataSnapshot!
     
     override func awakeFromNib()
     {
@@ -30,18 +37,59 @@ class VoteCell: UITableViewCell
         
         self.yesRadio.otherButtons = self.otherButtons
     }
-
     
     @IBAction func yesChecked(_ sender: Any)
     {
-        //self.yesRadio.selected()
-        //self.yesRadio.deselectOtherButtons()
+        print("Yes selected")
+        print(self.indexPath)
+        
+        ref = FIRDatabase.database().reference()
+        
+        //replace tempUserName w/ Util._currentUserName!
+        
+        let tempUserName = "[User PlaceHolder]"
+        
+        switch(self.indexPath.section)
+        {
+            case 0:
+                let childUpdates = ["/result/bills/\(cellSnap.key)/votes/\(String(describing: (Util._currentUser?.uid)!))" :[ "user" : "\(tempUserName)", "vote" :"yes"]]
+                self.ref.updateChildValues(childUpdates)
+                break;
+            case 1:
+                let childUpdates = ["/result/misc/\(cellSnap.key)/votes/\(String(describing: (Util._currentUser?.uid)!))" :[ "user" : "\(tempUserName)", "vote" :"yes"]]
+                self.ref.updateChildValues(childUpdates)
+                break;
+            default:
+                break;
+        }
+        
+        
     }
     
     @IBAction func noChecked(_ sender: Any)
     {
-        //self.noRadio.selected()
-        //self.noRadio.deselectOtherButtons()
+        print("No selected")
+        print(self.indexPath)
+        
+        ref = FIRDatabase.database().reference()
+
+        //replace tempUserName w/ Util._currentUserName!
+        
+        let tempUserName = "[User PlaceHolder]"
+        
+        switch(self.indexPath.section)
+        {
+        case 0:
+            let childUpdates = ["/result/bills/\(cellSnap.key)/votes/\(String(describing: self.user?.uid))" :[ "user" : "\(tempUserName)", "vote" :"no"]]
+            self.ref.updateChildValues(childUpdates)
+            break;
+        case 1:
+            let childUpdates = ["/result/misc/\(cellSnap.key)/votes/\(String(describing: self.user?.uid))" :[ "user" : "\(tempUserName)", "vote" :"no"]]
+            self.ref.updateChildValues(childUpdates)
+            break;
+        default:
+            break;
+        }
     }
     
     override func setSelected(_ selected: Bool, animated: Bool)

@@ -9,6 +9,8 @@
 import UIKit
 import SideMenuController
 import DLRadioButton
+import Firebase
+import FirebaseAuthUI
 
 class VoteViewController: UIViewController, SideMenuControllerDelegate, UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate
 {
@@ -16,6 +18,12 @@ class VoteViewController: UIViewController, SideMenuControllerDelegate, UITableV
     @IBOutlet weak var tableView: UITableView!
     
     @IBOutlet weak var writeOptionTextField: UITextField!
+    
+    var bills : [FIRDataSnapshot]! = []
+    var miscs : [FIRDataSnapshot]! = []
+    
+    var ref : FIRDatabaseReference!
+    var user : FIRUser?
     
     var origPos: CGPoint!
     
@@ -30,7 +38,55 @@ class VoteViewController: UIViewController, SideMenuControllerDelegate, UITableV
         tableView.dataSource = self
         
         NotificationCenter.default.addObserver(self, selector: #selector(self.keyboardNotification(notification:)), name: NSNotification.Name.UIKeyboardWillChangeFrame, object: nil)
+        
+        configureAuth()
+    }
     
+    func configureAuth()
+    {
+        FIRAuth.auth()?.addStateDidChangeListener { (auth: FIRAuth, user: FIRUser?) in
+            //initialize master link text field
+            self.ref = FIRDatabase.database().reference()
+            
+            // refresh table data
+            self.bills.removeAll(keepingCapacity: false)
+            self.miscs.removeAll(keepingCapacity: false)
+            self.tableView.reloadData()
+            
+            self.configureDB()
+        }
+    }
+    
+    func configureDB()
+    {
+        ref = FIRDatabase.database().reference()
+        
+        ref.child("bills").observe(.childAdded) { (snapshot: FIRDataSnapshot)in
+            self.bills.append(snapshot)
+            self.tableView.insertRows(at: [IndexPath(row: self.bills.count-1, section: 0)], with: .automatic)
+        }
+        
+        ref.child("bills").observe(.childChanged) { (snapshot: FIRDataSnapshot) in
+            
+            for i in (0...(self.bills.count-1))
+            {
+                self.bills[i] = snapshot
+            }
+        }
+        
+        ref.child("misc").observe(.childAdded) { (snapshot: FIRDataSnapshot)in
+            self.miscs.append(snapshot)
+            self.tableView.insertRows(at: [IndexPath(row: self.miscs.count-1, section: 1)], with: .automatic)
+            
+        }
+        
+        ref.child("misc").observe(.childChanged) { (snapshot: FIRDataSnapshot) in
+            
+            for i in (0...(self.miscs.count-1))
+            {
+                self.miscs[i] = snapshot
+            }
+        }
     }
     
     func numberOfSections(in tableView: UITableView) -> Int
@@ -54,7 +110,7 @@ class VoteViewController: UIViewController, SideMenuControllerDelegate, UITableV
             break;
         }
         
-        return header
+        return header.contentView
     }
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat
@@ -68,10 +124,10 @@ class VoteViewController: UIViewController, SideMenuControllerDelegate, UITableV
         {
             case 0:
                 //bills
-            return 1
+            return self.bills.count
             case 1:
                 //misc
-            return 1
+            return self.miscs.count
         default:
                 //write in
             return 0
@@ -87,9 +143,33 @@ class VoteViewController: UIViewController, SideMenuControllerDelegate, UITableV
         {
             case 0:
                 cell = tableView.dequeueReusableCell(withIdentifier: "voteCell", for: indexPath) as! VoteCell
+                let snap = bills[indexPath.row]
+                let val = snap.value as! [String:String]
+                
+                cell.detailLabel.text = val["billName"] ?? "[billName]"
+                
+                cell.indexPath = indexPath
+                cell.cellSnap = snap
+                
+//                let yesRadTap = CustomTap(target: self, action: #selector(yesBillTarget(_:)))
+//                yesRadTap.indexPath = indexPath
+//                
+//                cell.yesRadio.addGestureRecognizer(yesRadTap)
+//                
+//                let noRadTap = CustomTap(target: self, action: #selector(noBillTarget(_:)))
+//                noRadTap.indexPath = indexPath
+//                
+//                cell.noRadio.addGestureRecognizer(noRadTap)
                 break;
             case 1:
                 cell = tableView.dequeueReusableCell(withIdentifier: "voteCell", for: indexPath) as! VoteCell
+                let snap = miscs[indexPath.row]
+                let val = snap.value as! [String:String]
+                
+                cell.detailLabel.text = val["miscDetail"] ?? "[miscDetail]"
+                
+                cell.indexPath = indexPath
+                cell.cellSnap = snap
                 break;
             default:
                 break;
@@ -139,7 +219,7 @@ class VoteViewController: UIViewController, SideMenuControllerDelegate, UITableV
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool
     {
-        UIView.animate(withDuration: 0.1)
+        UIView.animate(withDuration: 0.15)
         {
             self.view.frame.origin = self.origPos
         }
@@ -154,7 +234,7 @@ class VoteViewController: UIViewController, SideMenuControllerDelegate, UITableV
     {
         print("Did begin editing.")
         
-        UIView.animate(withDuration: 0.1)
+        UIView.animate(withDuration: 0.15)
         {
             self.view.frame.origin = self.origPos
         }

@@ -62,6 +62,7 @@ class LogInViewController: UIViewController, UITextFieldDelegate
                 if(self.user != activeUser)
                 {
                     self.user = activeUser
+                    Util._currentUser = user
                    self.performSegue(withIdentifier: "verifiedSegue", sender: self)
                 }
             }
@@ -137,6 +138,8 @@ class LogInViewController: UIViewController, UITextFieldDelegate
                 self.usernameTextField.text = ""
                 self.passwordTextField.text = ""
                 
+                Util._currentUser = user
+                
                 self.performSegue(withIdentifier: "verifiedSegue", sender: self)
             })
             
@@ -167,6 +170,8 @@ class LogInViewController: UIViewController, UITextFieldDelegate
             
             self.usernameTextField.text = ""
             self.passwordTextField.text = ""
+            
+            Util._currentUser = user
             
             self.performSegue(withIdentifier: "verifiedSegue", sender: self)
         })
@@ -231,7 +236,7 @@ class LogInViewController: UIViewController, UITextFieldDelegate
     {
         let alert = UIAlertController(title: title, message: message, preferredStyle: UIAlertControllerStyle.alert)
         alert.addAction((UIAlertAction(title: "OK", style: .default, handler: { (action) in
-            self.dismiss(animated: true, completion: nil)
+            
         })))
         self.present(alert, animated: true, completion: nil)
     }

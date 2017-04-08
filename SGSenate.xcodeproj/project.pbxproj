@@ -29,6 +29,7 @@
 		287C9AE21E893F0000845CDF /* VoteCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 287C9AE11E893F0000845CDF /* VoteCell.swift */; };
 		287C9AE41E8952D200845CDF /* VoteHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 287C9AE31E8952D200845CDF /* VoteHeader.swift */; };
 		28BBC04A1E86183A00114924 /* Reachability.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28BBC0491E86183A00114924 /* Reachability.swift */; };
+		28BEFC361E986BFA00EF9101 /* ExpandDetailTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28BEFC351E986BFA00EF9101 /* ExpandDetailTableViewController.swift */; };
 		28C733B71E7198770046F9D7 /* FloorCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28C733B61E7198770046F9D7 /* FloorCell.swift */; };
 		28C733B91E7198880046F9D7 /* QueueCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28C733B81E7198880046F9D7 /* QueueCell.swift */; };
 		28C733BB1E71AAF00046F9D7 /* AdminDebateTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28C733BA1E71AAF00046F9D7 /* AdminDebateTableViewController.swift */; };
@@ -67,6 +68,7 @@
 		287C9AE11E893F0000845CDF /* VoteCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VoteCell.swift; sourceTree = "<group>"; };
 		287C9AE31E8952D200845CDF /* VoteHeader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VoteHeader.swift; sourceTree = "<group>"; };
 		28BBC0491E86183A00114924 /* Reachability.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Reachability.swift; sourceTree = "<group>"; };
+		28BEFC351E986BFA00EF9101 /* ExpandDetailTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExpandDetailTableViewController.swift; sourceTree = "<group>"; };
 		28C733B61E7198770046F9D7 /* FloorCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FloorCell.swift; sourceTree = "<group>"; };
 		28C733B81E7198880046F9D7 /* QueueCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QueueCell.swift; sourceTree = "<group>"; };
 		28C733BA1E71AAF00046F9D7 /* AdminDebateTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AdminDebateTableViewController.swift; sourceTree = "<group>"; };
@@ -244,6 +246,7 @@
 			isa = PBXGroup;
 			children = (
 				28F0A5421E902AA200BA5394 /* ExpandResultsCell.swift */,
+				28BEFC351E986BFA00EF9101 /* ExpandDetailTableViewController.swift */,
 				28F0A5441E902AB100BA5394 /* ExpandTableViewController.swift */,
 			);
 			name = ResultsTableViewController;
@@ -407,6 +410,7 @@
 				286D3DDD1E4BBEB5007F9A1C /* VoteViewController.swift in Sources */,
 				286D3DD51E4BBE2A007F9A1C /* BillsViewController.swift in Sources */,
 				286D3DDB1E4BBEAA007F9A1C /* LogInViewController.swift in Sources */,
+				28BEFC361E986BFA00EF9101 /* ExpandDetailTableViewController.swift in Sources */,
 				286D3DD91E4BBE56007F9A1C /* MiscViewController.swift in Sources */,
 				28C733BB1E71AAF00046F9D7 /* AdminDebateTableViewController.swift in Sources */,
 				28C733B91E7198880046F9D7 /* QueueCell.swift in Sources */,

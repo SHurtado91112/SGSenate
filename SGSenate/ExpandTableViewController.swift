@@ -7,18 +7,26 @@
 //
 
 import UIKit
+import Firebase
+import FirebaseAuthUI
 
 class ExpandTableViewController: UITableViewController
 {
     
-    var billCountDict = [NSDictionary]()
+    var bills : [FIRDataSnapshot]! = []
+    var billsVote = [NSDictionary]()
     
-    var miscCountDict = [NSDictionary]()
+    var miscs : [FIRDataSnapshot]! = []
+    var miscsVote = [NSDictionary]()
+    
+    var ref : FIRDatabaseReference!
+    var user : FIRUser?
 
     override func viewDidLoad()
     {
         super.viewDidLoad()
         
+        configureAuth()
     }
 
     override func didReceiveMemoryWarning()
@@ -27,29 +35,123 @@ class ExpandTableViewController: UITableViewController
         // Dispose of any resources that can be recreated.
     }
 
-    // MARK: - Table view data source
+    func configureAuth()
+    {
+        FIRAuth.auth()?.addStateDidChangeListener { (auth: FIRAuth, user: FIRUser?) in
+            //initialize master link text field
+            self.ref = FIRDatabase.database().reference()
+            
+            // refresh table data
+            self.bills.removeAll(keepingCapacity: false)
+            self.miscs.removeAll(keepingCapacity: false)
+            self.tableView.reloadData()
+            
+            self.configureDB()
+        }
+    }
+    
+    func configureDB()
+    {
+        ref = FIRDatabase.database().reference()
+        
+        ref.child("bills").observe(.childAdded) { (snapshot: FIRDataSnapshot)in
+            self.bills.append(snapshot)
+            self.tableView.insertRows(at: [IndexPath(row: self.bills.count-1, section: 0)], with: .automatic)
+        }
+        
+        ref.child("bills").observe(.childChanged) { (snapshot: FIRDataSnapshot) in
+            
+            for i in (0...(self.bills.count-1))
+            {
+                self.bills[i] = snapshot
+            }
+        }
+        
+        ref.child("misc").observe(.childAdded) { (snapshot: FIRDataSnapshot)in
+            self.miscs.append(snapshot)
+            self.tableView.insertRows(at: [IndexPath(row: self.miscs.count-1, section: 1)], with: .automatic)
+            
+        }
+        
+        ref.child("misc").observe(.childChanged) { (snapshot: FIRDataSnapshot) in
+            
+            for i in (0...(self.miscs.count-1))
+            {
+                self.miscs[i] = snapshot
+            }
+        }
+    }
 
+    
+    // MARK: - Table view data source
     override func numberOfSections(in tableView: UITableView) -> Int
     {
-        
         return 2
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int
     {
-        // #warning Incomplete implementation, return the number of rows
-        return 0
+        switch(section)
+        {
+            case 0:
+                print("Bills: \(self.bills.count)")
+                return self.bills.count
+            case 1:
+                print("Misc: \(self.miscs.count)")
+                return self.miscs.count
+            default:
+                return 0
+        }
     }
 
-    /*
-    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "reuseIdentifier", for: indexPath)
-
-        // Configure the cell...
-
-        return cell
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell
+    {
+        switch(indexPath.section)
+        {
+        case 0:
+            let cell = tableView.dequeueReusableCell(withIdentifier: "voteResultsCell", for: indexPath) as! ExpandResultsCell
+            
+            
+            
+            return cell
+        case 1:
+            let cell = tableView.dequeueReusableCell(withIdentifier: "voteResultsCell", for: indexPath) as! ExpandResultsCell
+            
+            
+            
+            return cell
+        default:
+            return ExpandResultsCell()
+        }
     }
-    */
+    
+    override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat
+    {
+        return 44.0
+    }
+    
+    override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView?
+    {
+        let header = tableView.dequeueReusableCell(withIdentifier: "sectionResultsCell") as! ExpandResultsCell
+        
+        switch(section)
+        {
+            case 0:
+                header.leftHandLabel.text = "Bills"
+                break;
+            default:
+                header.leftHandLabel.text = "Misc."
+                break;
+        }
+        return header.contentView
+    }
+    
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath)
+    {
+        let cell = self.tableView.cellForRow(at: indexPath)
+        
+        cell?.selectionStyle = .none
+    }
 
     /*
     // Override to support conditional editing of the table view.

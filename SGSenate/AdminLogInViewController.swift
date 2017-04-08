@@ -102,7 +102,7 @@ class AdminLogInViewController: UIViewController, UITextFieldDelegate
     {
         let alert = UIAlertController(title: title, message: message, preferredStyle: UIAlertControllerStyle.alert)
         alert.addAction((UIAlertAction(title: "OK", style: .default, handler: { (action) in
-            self.dismiss(animated: true, completion: nil)
+            
         })))
         self.present(alert, animated: true, completion: nil)
     }

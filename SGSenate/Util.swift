@@ -8,10 +8,14 @@
 
 import Foundation
 import UIKit
+import Firebase
 
 class Util: NSObject
 {
     static var onSignOutNotification = "onSignOutNotification"
+    
+    static var _currentUserName : String?
+    static var _currentUser : FIRUser?
     
     class func invokeAlertMethod(_ strTitle: NSString, strBody: NSString, delegate: AnyObject?)
     {
@@ -23,6 +27,11 @@ class Util: NSObject
         let rootVC = UIApplication.shared.keyWindow?.rootViewController
         rootVC?.present(alert, animated: true){}
     }
+}
+
+class CustomTap : UITapGestureRecognizer
+{
+    var indexPath : IndexPath = IndexPath()
 }
 
 extension UIView {
