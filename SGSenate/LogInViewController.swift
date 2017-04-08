@@ -63,6 +63,15 @@ class LogInViewController: UIViewController, UITextFieldDelegate
                 {
                     self.user = activeUser
                     Util._currentUser = user
+                    
+                    self.ref = FIRDatabase.database().reference()
+                    self.ref.child("users").child("\((self.user?.uid)!)").observe(.value, with: { (snap: FIRDataSnapshot) in
+                        
+                        let val = snap.value as! [String:String]
+                        
+                        Util._currentUserName = val["user"]
+                    })
+                    
                    self.performSegue(withIdentifier: "verifiedSegue", sender: self)
                 }
             }
@@ -122,7 +131,9 @@ class LogInViewController: UIViewController, UITextFieldDelegate
             
             let userRef = self.ref.child("users").child(uid)
             
-            let values = ["email" : email]
+            Util._currentUserName = self.nameTextField.text!
+            
+            let values = ["email" : email, "user" : self.nameTextField.text!]
             
             userRef.updateChildValues(values, withCompletionBlock: { (error: Error?, tempRef: FIRDatabaseReference) in
                 
@@ -137,6 +148,7 @@ class LogInViewController: UIViewController, UITextFieldDelegate
                 print("Saved User")
                 self.usernameTextField.text = ""
                 self.passwordTextField.text = ""
+                self.nameTextField.text = ""
                 
                 Util._currentUser = user
                 
@@ -167,6 +179,13 @@ class LogInViewController: UIViewController, UITextFieldDelegate
             }
 
             print("Logged In User")
+            
+            self.ref.child("users").child("\((user?.uid)!)").observe(.value, with: { (snap: FIRDataSnapshot) in
+                
+                let val = snap.value as! [String:String]
+                
+                Util._currentUserName = val["user"]
+            })
             
             self.usernameTextField.text = ""
             self.passwordTextField.text = ""
@@ -228,7 +247,6 @@ class LogInViewController: UIViewController, UITextFieldDelegate
     override func didReceiveMemoryWarning()
     {
         super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
     }
     
     

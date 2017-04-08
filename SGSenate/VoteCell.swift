@@ -45,18 +45,14 @@ class VoteCell: UITableViewCell
         
         ref = FIRDatabase.database().reference()
         
-        //replace tempUserName w/ Util._currentUserName!
-        
-        let tempUserName = "[User PlaceHolder]"
-        
         switch(self.indexPath.section)
         {
             case 0:
-                let childUpdates = ["/result/bills/\(cellSnap.key)/votes/\(String(describing: (Util._currentUser?.uid)!))" :[ "user" : "\(tempUserName)", "vote" :"yes"]]
+                let childUpdates = ["/result/bills/\(cellSnap.key)/votes/\(String(describing: (Util._currentUser?.uid)!))" :[ "user" : "\(Util._currentUserName!)", "vote" :"yes"]]
                 self.ref.updateChildValues(childUpdates)
                 break;
             case 1:
-                let childUpdates = ["/result/misc/\(cellSnap.key)/votes/\(String(describing: (Util._currentUser?.uid)!))" :[ "user" : "\(tempUserName)", "vote" :"yes"]]
+                let childUpdates = ["/result/misc/\(cellSnap.key)/votes/\(String(describing: (Util._currentUser?.uid)!))" :[ "user" : "\(Util._currentUserName!)", "vote" :"yes"]]
                 self.ref.updateChildValues(childUpdates)
                 break;
             default:
@@ -72,19 +68,15 @@ class VoteCell: UITableViewCell
         print(self.indexPath)
         
         ref = FIRDatabase.database().reference()
-
-        //replace tempUserName w/ Util._currentUserName!
-        
-        let tempUserName = "[User PlaceHolder]"
         
         switch(self.indexPath.section)
         {
         case 0:
-            let childUpdates = ["/result/bills/\(cellSnap.key)/votes/\(String(describing: self.user?.uid))" :[ "user" : "\(tempUserName)", "vote" :"no"]]
+            let childUpdates = ["/result/bills/\(cellSnap.key)/votes/\(String(describing: self.user?.uid))" :[ "user" : "\(Util._currentUserName!)", "vote" :"no"]]
             self.ref.updateChildValues(childUpdates)
             break;
         case 1:
-            let childUpdates = ["/result/misc/\(cellSnap.key)/votes/\(String(describing: self.user?.uid))" :[ "user" : "\(tempUserName)", "vote" :"no"]]
+            let childUpdates = ["/result/misc/\(cellSnap.key)/votes/\(String(describing: self.user?.uid))" :[ "user" : "\(Util._currentUserName!)", "vote" :"no"]]
             self.ref.updateChildValues(childUpdates)
             break;
         default:
