@@ -150,16 +150,7 @@ class VoteViewController: UIViewController, SideMenuControllerDelegate, UITableV
                 
                 cell.indexPath = indexPath
                 cell.cellSnap = snap
-                
-//                let yesRadTap = CustomTap(target: self, action: #selector(yesBillTarget(_:)))
-//                yesRadTap.indexPath = indexPath
-//                
-//                cell.yesRadio.addGestureRecognizer(yesRadTap)
-//                
-//                let noRadTap = CustomTap(target: self, action: #selector(noBillTarget(_:)))
-//                noRadTap.indexPath = indexPath
-//                
-//                cell.noRadio.addGestureRecognizer(noRadTap)
+
                 break;
             case 1:
                 cell = tableView.dequeueReusableCell(withIdentifier: "voteCell", for: indexPath) as! VoteCell

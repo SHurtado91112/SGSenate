@@ -14,10 +14,14 @@ class ExpandTableViewController: UITableViewController
 {
     
     var bills : [FIRDataSnapshot]! = []
-    var billsVote = [NSDictionary]()
+    var billsResultSnap = [FIRDataSnapshot]()
+    var billsVote = NSMutableDictionary()
     
     var miscs : [FIRDataSnapshot]! = []
-    var miscsVote = [NSDictionary]()
+    var miscResultSnap = [FIRDataSnapshot]()
+    var miscVote = NSMutableDictionary()
+    
+    var results : [FIRDataSnapshot]! = []
     
     var ref : FIRDatabaseReference!
     var user : FIRUser?
@@ -44,9 +48,9 @@ class ExpandTableViewController: UITableViewController
             // refresh table data
             self.bills.removeAll(keepingCapacity: false)
             self.miscs.removeAll(keepingCapacity: false)
-            self.tableView.reloadData()
             
             self.configureDB()
+            self.tableView.reloadData()
         }
     }
     
@@ -80,8 +84,132 @@ class ExpandTableViewController: UITableViewController
                 self.miscs[i] = snapshot
             }
         }
+        
+        //results
+        ref.child("result").child("bills").observe(.childAdded) { (snapshot: FIRDataSnapshot)in
+            self.billsResultSnap.append(snapshot)
+            self.populateResults(val: 1)
+        }
+        
+        ref.child("result").child("bills").observe(.childChanged) { (snapshot: FIRDataSnapshot) in
+            
+            for i in (0...(self.billsResultSnap.count-1))
+            {
+                self.billsResultSnap[i] = snapshot
+            }
+            self.populateResults(val: 1)
+        }
+        
+        ref.child("result").child("misc").observe(.childAdded) { (snapshot: FIRDataSnapshot)in
+            self.miscResultSnap.append(snapshot)
+            self.populateResults(val: 0)
+        }
+        
+        ref.child("result").child("misc").observe(.childChanged) { (snapshot: FIRDataSnapshot) in
+            
+            for i in (0...(self.miscResultSnap.count-1))
+            {
+                self.miscResultSnap[i] = snapshot
+            }
+            
+            self.populateResults(val: 0)
+        }
     }
 
+    func populateResults(val: Int)
+    {
+        switch(val)
+        {
+            case 0:
+                
+                for i in (0...(self.miscResultSnap.count-1))
+                {
+                    let snap = miscResultSnap[i]
+                    let snapRef = snap.ref
+                    var votes : [NSDictionary] = []
+                    
+                    snapRef.child("votes").queryOrderedByValue().observe(.value, with: { (voteSnap : FIRDataSnapshot) in
+                        for rest in voteSnap.children.allObjects as! [FIRDataSnapshot]
+                        {
+                            votes.append(rest.value as! NSDictionary)
+                        }
+                        
+                        self.reloadMiscVote(votes: votes, id: snap.key)
+                    })
+                }
+                
+                break;
+            default:
+                
+                for i in (0...(self.billsResultSnap.count-1))
+                {
+                    let snap = billsResultSnap[i]
+                    let snapRef = snap.ref
+                    print(snap.key)
+                    var votes : [NSDictionary] = []
+                    
+                    snapRef.child("votes").queryOrderedByValue().observeSingleEvent(of: .value, with: { (voteSnap : FIRDataSnapshot) in
+                        
+                        for rest in voteSnap.children.allObjects as! [FIRDataSnapshot]
+                        {
+                            votes.append(rest.value as! NSDictionary)
+                        }
+                        
+                        self.reloadBillsVote(votes: votes, id: snap.key)
+                    })
+                }
+                
+                break;
+        }
+    }
+    
+    func reloadBillsVote(votes: [NSDictionary], id: String)
+    {
+        var yesVotes = 0
+        var noVotes = 0
+        
+        for j in (0...(votes.count-1))
+        {
+            let voter = votes[j]
+            let vote = voter["vote"] as! String
+            
+            if(vote == "yes")
+            {
+                yesVotes += 1
+            }
+            else
+            {
+                noVotes += 1
+            }
+        }
+        
+        self.billsVote[id] = ["votes" : votes, "yes" : yesVotes, "no" : noVotes]
+        self.tableView.reloadData()
+    }
+    
+    func reloadMiscVote(votes: [NSDictionary], id: String)
+    {
+        var yesVotes = 0
+        var noVotes = 0
+        
+        for j in (0...(votes.count-1))
+        {
+            let voter = votes[j]
+            let vote = voter["vote"] as! String
+            
+            if(vote == "yes")
+            {
+                yesVotes += 1
+            }
+            else
+            {
+                noVotes += 1
+            }
+        }
+        
+        self.miscVote[id] = ["votes" : votes, "yes" : yesVotes, "no" : noVotes]
+        self.tableView.reloadData()
+    }
     
     // MARK: - Table view data source
     override func numberOfSections(in tableView: UITableView) -> Int
@@ -111,13 +239,63 @@ class ExpandTableViewController: UITableViewController
         case 0:
             let cell = tableView.dequeueReusableCell(withIdentifier: "voteResultsCell", for: indexPath) as! ExpandResultsCell
             
+            let snap = self.bills[indexPath.row]
+            let val = snap.value as! [String:String]
+            let topic = val["billName"]
             
+            cell.leftHandLabel.text = topic
+            
+            if(self.billsVote.count-1 < indexPath.row)
+            {
+                return cell
+            }
+            
+            let billDict = self.billsVote[snap.key] as! NSDictionary
+            
+            guard let yesResult = billDict["yes"]
+            else
+            {
+                return cell
+            }
+            
+            guard let noResult = billDict["no"]
+            else
+            {
+                return cell
+            }
+            
+            cell.rightHandLabel.text = "Yes: \(String(describing: yesResult)), No: \(String(describing: noResult))"
             
             return cell
         case 1:
             let cell = tableView.dequeueReusableCell(withIdentifier: "voteResultsCell", for: indexPath) as! ExpandResultsCell
             
+            let snap = self.miscs[indexPath.row]
+            let val = snap.value as! [String:String]
+            let topic = val["miscDetail"]
             
+            cell.leftHandLabel.text = topic
+            
+            if(self.miscVote.count-1 < indexPath.row)
+            {
+                return cell
+            }
+            
+            let miscDict = self.miscVote[indexPath.row] as! NSDictionary
+            
+            guard let yesResult = miscDict["yes"]
+            else
+            {
+                return cell
+            }
+            
+            guard let noResult = miscDict["no"]
+            else
+            {
+                return cell
+            }
+            
+            cell.rightHandLabel.text = "Yes: \(String(describing: yesResult)), No: \(String(describing: noResult))"
             
             return cell
         default:

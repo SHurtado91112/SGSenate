@@ -72,11 +72,11 @@ class VoteCell: UITableViewCell
         switch(self.indexPath.section)
         {
         case 0:
-            let childUpdates = ["/result/bills/\(cellSnap.key)/votes/\(String(describing: self.user?.uid))" :[ "user" : "\(Util._currentUserName!)", "vote" :"no"]]
+            let childUpdates = ["/result/bills/\(cellSnap.key)/votes/\(String(describing: (Util._currentUser?.uid)!))" :[ "user" : "\(Util._currentUserName!)", "vote" :"no"]]
             self.ref.updateChildValues(childUpdates)
             break;
         case 1:
-            let childUpdates = ["/result/misc/\(cellSnap.key)/votes/\(String(describing: self.user?.uid))" :[ "user" : "\(Util._currentUserName!)", "vote" :"no"]]
+            let childUpdates = ["/result/misc/\(cellSnap.key)/votes/\(String(describing: (Util._currentUser?.uid)!))" :[ "user" : "\(Util._currentUserName!)", "vote" :"no"]]
             self.ref.updateChildValues(childUpdates)
             break;
         default:
